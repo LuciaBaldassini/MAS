@@ -2,11 +2,11 @@
 """
 Created on Sun May 12 14:26:47 2019
 
-@author: danie
+@author: danie and lucia
 """
 import numpy as np 
 import Agent
-
+import pandas as pd
 
 def assignRandomHat(n):
 	agents = []  
@@ -30,12 +30,32 @@ def assignRandomHat(n):
 		#hats.append(colour) # add after so agents own hat is not added to list
 		#agents.append(new_agent)
 		i += 1
-	showHatDistribution(agents)
+	#showHatDistribution(agents)
+	return agents
 		
-    
-def showHatDistribution(agents):
+# this function might not be necessary    
+#def showHatDistribution(agents):
+#	for agent in reversed(agents):
+	#	print(agent)
+
+def countHats(agent,agents):
+	numberBlueHats=0
+	numberRedHats=0
+	for a in agents[:agent.size-1]:
+		if(a.colourHat=='blue'):
+			numberBlueHats +=1
+		elif(a.colourHat=='red'):
+			numberRedHats += 1
+	return numberBlueHats,numberRedHats
+		
+	
+		
+def createAgentKnowledge(agents):
+	df = pd.DataFrame(columns=['Agent','hatColour','numberOfRedHats','numberOfBlueHats'])
 	for agent in reversed(agents):
-		print(agent)
+		blueCount,redCount=countHats(agent,agents)
+		df = df.append({'Agent': agent.size,'hatColour':agent.colourHat,'numberOfRedHats':redCount,'numberOfBlueHats':blueCount}, ignore_index=True)
+	print(df)
 	   
 if __name__ == '__main__':
 	descriptionChoice= str(input("Welcome, would you like to read the description of this riddle? [yes/no] \n"))
@@ -44,8 +64,9 @@ if __name__ == '__main__':
 			print(d.read())
 	number_prisoners = int(input("How many prisoners would you like? \n"))
 	print("You chose", number_prisoners, "prisoners")   
-	assignRandomHat(number_prisoners)
-    
+	a=assignRandomHat(number_prisoners)
+	print("This is the knowledge of the agents before any assignment:\n")
+	createAgentKnowledge(a)
 
     
     
