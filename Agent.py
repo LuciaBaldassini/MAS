@@ -10,7 +10,7 @@ class Agent:
 		ret = ""
 		ret += "Agent "
 		ret += repr(self.size)
-		ret += " sees the following hats, from tallest to longest:"
+		ret += " sees the following hats, from tallest to shortest:"
 		ret += "\n"
 		for hat in self.hats_in_front:
 			ret += repr(hat)
