@@ -1,0 +1,6 @@
+You and other individuals have been captured by super-intelligent alien overlords. The aliens think humans look quite tasty, but their civilization forbids eating highly logical and cooperative beings. Unfortunately, they’re not sure whether you qualify, so they decide to give you all a test. 
+The aliens tell you the following: 
+
+"You will be placed in a line, facing forward and ordered from tallest to shortest. You will not be able to look behind you or step out of line. Each of you will have either a blue or a red hat, assigned randomly and I won't tell how many of each colour there are. When I say to begnin, each of you must guess the colour of your hat, starting from the person in the back and moving down the line. Don't even think to say words other than 'red' or 'blue' or signal something with intonation for example: You will be all eaten immediately! If at least the total number of you -1 guess the hat correctly, you will be spared. You have 5 minutes to discuss a strategy and then we begin!"
+
+Can you think of a strategy guaranteed to save everyone? If not, look at our analysis of this riddle!
