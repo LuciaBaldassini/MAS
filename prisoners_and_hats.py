@@ -43,7 +43,7 @@ def countHats(agent,agents):
 	numberRedHats=0
 	for a in agents[:agent.size-1]:
 		if(a.colourHat=='blue'):
-			numberBlueHats +=1
+			numberBlueHats += 1
 		elif(a.colourHat=='red'):
 			numberRedHats += 1
 	return numberBlueHats,numberRedHats
@@ -51,10 +51,10 @@ def countHats(agent,agents):
 	
 		
 def createAgentKnowledge(agents):
-	df = pd.DataFrame(columns=['Agent','hatColour','numberOfRedHats','numberOfBlueHats'])
+	df = pd.DataFrame(columns=['Agent','hatColour','numberOfRedHats','numberOfBlueHats','K_agent(hatColour)'])
 	for agent in reversed(agents):
 		blueCount,redCount=countHats(agent,agents)
-		df = df.append({'Agent': agent.size,'hatColour':agent.colourHat,'numberOfRedHats':redCount,'numberOfBlueHats':blueCount}, ignore_index=True)
+		df = df.append({'Agent': agent.size,'hatColour':agent.colourHat,'numberOfRedHats':redCount,'numberOfBlueHats':blueCount,'K_agent(hatColour)':'no'}, ignore_index=True)
 	print(df)
 	   
 if __name__ == '__main__':
