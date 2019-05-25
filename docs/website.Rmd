@@ -5,11 +5,7 @@ author:
 - Danielle Metz
 - Julia Mol
 runtime: shiny
-output:
-  prettydoc::html_pretty:
-    toc: true 
-    theme: hpstr
-    highlight: github
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
