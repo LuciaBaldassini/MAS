@@ -1,0 +1,38 @@
+---
+title: "The Prisoners and Hats Riddle"
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+  encoding=encoding,
+  output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+author:
+- Lucia Baldassini
+- Danielle Metz
+- Julia Mol
+runtime: shiny
+output:
+  prettydoc::html_pretty:
+    toc: true 
+    theme: hpstr
+    highlight: github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In this website we present an analysis of the riddle "Prisoners and Hats". This website contains the following sections:
+
+
+# Description of the riddle
+
+You and other individuals have been captured by super-intelligent aliens! The aliens think humans look quite tasty, but luckily for you, their civilization forbids eating highly logical and cooperative beings. They’re not sure whether you qualify, so they decide to give you all a test. 
+
+
+# Implementation
+
+
+# Analysis
+
+
+
