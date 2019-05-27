@@ -40,7 +40,7 @@ The strategy is to agree that whoever goes first, will say <span style="color:bl
 
 # Implementation
 
-A programme that solves this riddle can be found [here](https://luciabaldassini.github.io/MAS/).
+A programme that solves this riddle can be found [here](https://github.com/LuciaBaldassini/MAS).
 
 # Analysis
 
