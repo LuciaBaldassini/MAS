@@ -14,4 +14,5 @@ numpy
 pandas
 ```
 ## Collaborators
-
+[Danielle Metz] (https://github.com/daniellemetz)
+[Julia Mol](https://github.com/s2904683)
