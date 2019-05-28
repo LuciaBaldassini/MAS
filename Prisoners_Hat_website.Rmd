@@ -1,0 +1,48 @@
+---
+title: "The Prisoners and Hats Riddle"
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+  encoding=encoding,  
+  output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+author:
+- Lucia Baldassini
+- Danielle Metz
+- Julia Mol
+runtime: shiny
+output:
+  prettydoc::html_pretty:
+    toc: true 
+    theme: hpstr
+    highlight: github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Description of the riddle
+
+You and other individuals have been captured by super-intelligent aliens! The aliens think humans look quite tasty, but luckily for you, their civilization forbids eating highly logical and cooperative beings. They’re not sure whether you qualify, so they decide to give you all a test. 
+The aliens tell you the following: 
+
+ <div style="background-color:PeachPuff ">
+  <p>"You will be placed in a line, facing forward and ordered from <span style="font-size:24px">tallest</span> to <span style="font-size:15px">shortest</span>. You will not be able to look behind you or step out of line. Each of you will have either a <span style="color:blue">blue</span> or a <span style="color:red">red</span> hat, assigned randomly and I won't tell how many of each colour there are. When I say to beging, each of you must guess the colour of your hat, starting from the person in the back and moving down the line. Don't even think to say words other than <span style="color:red">red</span> or <span style="color:blue">blue</span> or signal something with intonation for example: You will be all eaten immediately! If at least the total number of you -1 guess the hat correctly, you will be spared. You have 5 minutes to discuss a strategy and then we begin!"</p>
+</div> 
+
+
+Can you think of a strategy guaranteed to save everyone?
+
+## Strategy
+
+The strategy is to agree that whoever goes first, will say <span style="color:blue">blue</span> to indicate that he sees an odd number of <span style="color:blue">blue</span> hats and <span style="color:red">red</span> to indicate that he sees an even number of <span style="color:red">red</span> hats. He will proabably guess his hat wrong, but that's okay because it is allowed to commit one mistake!
+
+# Implementation
+
+A programme that solves this riddle can be found [here](https://github.com/LuciaBaldassini/MAS).
+
+# Analysis
+
+
+
