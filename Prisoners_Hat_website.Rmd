@@ -7,7 +7,7 @@ knit: (function(input_file, encoding) {
   output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
 author:
 - Lucia Baldassini
-- Danielle Metz
+- Dani&euml;lle Metz
 - Julia Mol
 runtime: shiny
 output:
@@ -24,11 +24,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Description of the riddle
 
-You and other individuals have been captured by super-intelligent aliens! The aliens think humans look quite tasty, but luckily for you, their civilization forbids eating highly logical and cooperative beings. They’re not sure whether you qualify, so they decide to give you all a test. 
+You and other individuals have been captured by super-intelligent aliens! The aliens think humans look quite tasty, but luckily for you, their civilization forbids eating highly logical and cooperative beings. They're not sure whether you qualify, so they decide to give you all a test. 
 The aliens tell you the following: 
 
  <div style="background-color:PeachPuff ">
-  <p>"You will be placed in a line, facing forward and ordered from <span style="font-size:24px">tallest</span> to <span style="font-size:15px">shortest</span>. You will not be able to look behind you or step out of line. Each of you will have either a <span style="color:blue">blue</span> or a <span style="color:red">red</span> hat, assigned randomly and I won't tell how many of each colour there are. When I say to beging, each of you must guess the colour of your hat, starting from the person in the back and moving down the line. Don't even think to say words other than <span style="color:red">red</span> or <span style="color:blue">blue</span> or signal something with intonation for example: You will be all eaten immediately! If at least the total number of you -1 guess the hat correctly, you will be spared. You have 5 minutes to discuss a strategy and then we begin!"</p>
+  <p>"You will be placed in a line, facing forward and ordered from <span style="font-size:24px">tallest</span> to <span style="font-size:15px">shortest</span>. You will not be able to look behind you or step out of line. Each of you will have either a <span style="color:blue">blue</span> or a <span style="color:red">red</span> hat, assigned randomly and I won't tell how many of each colour there are. When I say to begin, each of you must guess the colour of your hat, starting from the person in the back and moving down the line. Don't even think to say words other than <span style="color:red">red</span> or <span style="color:blue">blue</span> or signal something with intonation for example, you will be all eaten immediately! If at least the total number of you -1 guess the hat correctly, you will be spared. You have 5 minutes to discuss a strategy and then we begin!"</p>
 </div> 
 
 
@@ -36,13 +36,37 @@ Can you think of a strategy guaranteed to save everyone?
 
 ## Strategy
 
-The strategy is to agree that whoever goes first, will say <span style="color:blue">blue</span> to indicate that he sees an odd number of <span style="color:blue">blue</span> hats and <span style="color:red">red</span> to indicate that he sees an even number of <span style="color:red">red</span> hats. He will proabably guess his hat wrong, but that's okay because it is allowed to commit one mistake!
+The strategy is to agree that whoever goes first, will say <span style="color:blue">blue</span> to indicate that he sees an odd number of <span style="color:red">red</span> hats and <span style="color:red">red</span> to indicate that he sees an even number of <span style="color:red">red</span> hats. He will proabably guess his hat wrong, but that's okay because it is allowed to commit one mistake!
 
 # Implementation
 
 A programme that solves this riddle can be found [here](https://github.com/LuciaBaldassini/MAS).
 
 # Analysis
+In order to analyze the problem, we will present an example and go through all the agents' announcements and the changes to the Kripke model. This way, we can explore how the knowledge of the agents change. 
 
+In our example, <span style="color:#00FF00">Agent 1</span> (the smallest agent) will be wearing a <span style="color:blue">blue</span> hat. <span style="color:#FF8000">Agent 2</span> (the middle agent) will also be wearing a <span style="color:blue">blue</span> hat. <span style="color:#007FFF">Agent 3</span> (the tallest agent) will be wearing a <span style="color:red">red</span> hat. 
 
+```{r prisoners, echo=FALSE, out.width = '30%'}
+knitr::include_graphics("pictures/Prisoners_rbb.png")
+```
 
+Initially, we could draw the following Kripke model: 
+
+```{r model no relations, echo=FALSE, out.width = '50%'}
+knitr::include_graphics("pictures/hats_rbb_agent3,2,1.png")
+```
+
+Firstly, <span style="color:#007FFF">Agent 3</span> will announce <span style="color:red">red</span> to indicate that he sees an even number of <span style="color:red">red</span> hats (namely, 0). Both <span style="color:#FF8000">Agent 2</span> and <span style="color:#00FF00">Agent 1</span> now know this information. Hence, the Kripke model is updated to: 
+
+```{r model after 3, echo=FALSE, out.width = '50%'}
+knitr::include_graphics("pictures/hats_rbb_after3.png")
+```
+
+<span style="color:#FF8000">Agent 2</span> now knows that the real world is either &#60;r,b,b&#62; or &#60;b,b,b&#62; but it at least knows for sure the colour of its hat is <span style="color:blue">blue</span> and announces this. Because of this announcement, <span style="color:#00FF00">Agent 1</span> now has to update the knowledge that there is an even number of <span style="color:red">red</span> hats to the fact that the remaining hats now include an odd number of <span style="color:red">red</span> hats. The Kripke model is updated to: 
+
+```{r model after 3 and 2, echo=FALSE, out.width = '50%'}
+knitr::include_graphics("pictures/hats_rbb_after3,2.png")
+```
+
+Just like <span style="color:#FF8000">Agent 2</span>, <span style="color:#00FF00">Agent 1</span> now knows that the real world is either &#60;r,b,b&#62; or &#60;b,b,b&#62;. Therefore, <span style="color:#00FF00">Agent 1</span> can conclude that the colour of its own hat is <span style="color:blue">blue</span>, solving the riddle. 
