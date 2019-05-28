@@ -7,6 +7,7 @@ Created on Sun May 12 14:26:47 2019
 import numpy as np 
 import Agent
 import pandas as pd
+from itertools import product
 
 def assignRandomHat(n):
 	agents = []  
@@ -60,11 +61,13 @@ def countHats(agent,agents):
 		
 	
 		
-def createAgentKnowledge(agents):
+def createAgentKnowledge(agents,n):
 	df = pd.DataFrame(columns=['Agent','hatColour','numberOfRedHats','numberOfBlueHats','K_agent(hatColour)'])
 	for agent in reversed(agents):
 		blueCount,redCount=countHats(agent,agents)
 		df = df.append({'Agent': agent.size,'hatColour':agent.colourHat,'numberOfRedHats':redCount,'numberOfBlueHats':blueCount,'K_agent(hatColour)':'no'}, ignore_index=True)
+	allWorlds=list(product(['blue','red'],repeat = n))
+	print(allWorlds)
 	print(df)
 	   
 if __name__ == '__main__':
@@ -82,7 +85,7 @@ if __name__ == '__main__':
 	elif(hatChoice=='no'):
 		a=assignRandomHat(number_prisoners)
 		print("This is the knowledge of the agents before any assignment:\n")
-		createAgentKnowledge(a)
+		createAgentKnowledge(a,number_prisoners)
 	else:
 		print("Please input either yes or no")   
 
