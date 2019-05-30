@@ -8,7 +8,8 @@ knit: (function(input_file, encoding) {
 author:
 - Lucia Baldassini
 - Dani&euml;lle Metz
-- Julia Mol 
+- Julia Mol   
+output: rmdformats::material
 ---
 
 ```{r setup, include=FALSE}
@@ -16,8 +17,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-# {.tabset .tabset-fade}
-## Description of the riddle 
+
+# Description of the riddle
 
 
 <font face="apple chancery" color="olive"><center><i>You and other individuals have been captured by super-intelligent aliens! The aliens think agents look quite tasty, but luckily for you, their civilization forbids eating highly logical and cooperative beings. They are not sure whether you qualify, so they decide to give you all a test to figure that out. 
@@ -49,7 +50,7 @@ The game's goal is to have as many of the agents correctly guess their hat colou
 <!--When the first agent has answered, the common knowledge of the others gets immediately adjusted. The number of possible worlds decrements when the previous agent(s) has indicated whether he sees an odd or even number of blue hats in front of him. Combining previous answers with an agent's current..  
 -->
 
-## Implementation
+# Implementation
 
 To solve the riddle we built a system that is run from the command line. At the beginning, the system will ask the user whether (s)he would like to read the descirption of the riddle or not. Next, the user can select the amount of agents and whether or not to assign a hat colour for each agent. In case the user does not want to manually input a hat colour, these will be assigned randomly. The system will then show a table containing each agent, their hat colour and how many <span style="color:red">red</span> and <span style="color:blue">blue</span> hats each agent see. Throughout the programme, we adopt the convention that the tallest agent is represented by the agent with the highest number and the shortest agent is represented by the agent with the lowest number. 
 
@@ -58,7 +59,7 @@ Each agent is created from a class ```Agent()``` which stored the agent number, 
 
 A programme that solves this riddle can be found [here](https://github.com/LuciaBaldassini/MAS).
 
-## Analysis
+# Analysis
 
 Depending on the number of agents and the hat colours assigned to each of them, there are multiple different scenarios possible. 
 As an example, we will elaborate on the possible worlds in which three agents are participating in total. Each of the agents is either wearing a <span style="color: red">red</span> or <span style="color:blue">blue</span> hat.The following table indicates the 8 different scenarios that are possible in this situation. The arrows visualize the direction the particular agent is looking at and the color of the cell represents the agent's hat colour. 
@@ -121,31 +122,30 @@ In order to analyze the problem, we will present an example and go through all t
 
 In our example, <span style="color:#00FF00">Agent 1</span> (the smallest agent) will be wearing a <span style="color:blue">blue</span> hat. <span style="color:#FF8000">Agent 2</span> (the middle agent) will also be wearing a <span style="color:blue">blue</span> hat. <span style="color:#007FFF">Agent 3</span> (the tallest agent) will be wearing a <span style="color:red">red</span> hat. 
 
-```{r prisoners, echo=FALSE, out.width = '30%', fig.align='center'}
+```{r prisoners, echo=FALSE, out.width = '100%', fig.align='center'}
 knitr::include_graphics("pictures/Prisoners_rbb.png")
 ```
 
 Initially, we could draw the following Kripke model: 
 
-```{r model no relations, echo=FALSE, out.width = '50%', fig.align='center'}
+```{r model no relations, echo=FALSE, out.width = '100%', fig.align='center'}
 knitr::include_graphics("pictures/hats_rbb_agent3,2,1.png")
 ```
 
 Firstly, <span style="color:#007FFF">Agent 3</span> will announce <span style="color:red">red</span> to indicate that he sees an even number of <span style="color:red">red</span> hats (namely, 0). Both <span style="color:#FF8000">Agent 2</span> and <span style="color:#00FF00">Agent 1</span> now know this information. Hence, the Kripke model is updated to: 
 
 
-```{r model after 3, echo=FALSE, out.width = '50%', fig.align='center'}
+```{r model after 3, echo=FALSE, out.width = '100%', fig.align='center'}
 knitr::include_graphics("pictures/hats_rbb_after3.png")
 ```
 
 <span style="color:#FF8000">Agent 2</span> now knows that the real world is either &#60;r,b,b&#62; or &#60;b,b,b&#62; but it at least knows for sure the colour of its hat is <span style="color:blue">blue</span> and announces this. Because of this announcement, <span style="color:#00FF00">Agent 1</span> now has to update the knowledge that there is an even number of <span style="color:red">red</span> hats to the fact that the remaining hats now include an odd number of <span style="color:red">red</span> hats. The Kripke model is updated to: 
 
-```{r model after 3 and 2, echo=FALSE, out.width = '50%', fig.align='center'}
+```{r model after 3 and 2, echo=FALSE, out.width = '100%', fig.align='center'}
 knitr::include_graphics("pictures/hats_rbb_after3,2.png")
 ```
 
 Just like <span style="color:#FF8000">Agent 2</span>, <span style="color:#00FF00">Agent 1</span> now knows that the real world is either &#60;r,b,b&#62; or &#60;b,b,b&#62;. Therefore, <span style="color:#00FF00">Agent 1</span> can conclude that the colour of its own hat is <span style="color:blue">blue</span>, solving the riddle. 
 
 </div>
- 
-  
+
