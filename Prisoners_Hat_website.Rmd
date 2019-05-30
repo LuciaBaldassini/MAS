@@ -68,10 +68,10 @@ As an example, we will elaborate on the possible worlds in which three agents ar
 <caption><i>Table 1: The 8 different scenarios possible for 3 agents</i></caption>
 <tbody>
 <tr>
-<td bgcolor="FFEFD5"><center><font color="black">Scenarios</font></center></th>
-<td bgcolor="FFEFD5"><center><font color="black">Agent 3</font></center></th>
-<td bgcolor="FFEFD5"><center><font color="black">Agent 2</font></center></th>
-<td bgcolor="FFEFD5"><center><font color="black">Agent 1</font></center></th>
+<th bgcolor="FFEFD5"><center><font color="black">Scenarios</font></center></th>
+<th bgcolor="FFEFD5"><center><font color="black">Agent 3</font></center></th>
+<th bgcolor="FFEFD5"><center><font color="black">Agent 2</font></center></th>
+<th bgcolor="FFEFD5"><center><font color="black">Agent 1</font></center></th>
 </tr>
 <tr><td bgcolor="FFEFD5"><center><font color="black">1</font></center><br></td>
 <td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
