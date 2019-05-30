@@ -20,16 +20,17 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-<body style="background-color:papayawhip">
+<body style="background-color:papayawhip; font-family:Georgia">
 
 ## Description of the riddle
+
 
 <font face="apple chancery" color="olive"><center><i>You and other individuals have been captured by super-intelligent aliens! The aliens think agents look quite tasty, but luckily for you, their civilization forbids eating highly logical and cooperative beings. They are not sure whether you qualify, so they decide to give you all a test to figure that out. 
 The aliens tell you the following:</i> </center></font>
 
-<font face = "times new roman">
-<p><center> "You will be placed in a line, facing forward and ordered from <i>tallest</i> to <i>shortest</i>. <br>You will not be able to look behind you or step out of line. <br>
-Each of you will have either a <span style="color:blue">blue</span> or a <span style="color: red">red</span> hat, assigned randomly and no one will be told how many of each colour there are. When I tell you to begin, each of you must guess the colour of your hat, starting from the person in the back and moving down the line. <br>
+
+<p><center> "You will be placed in a line, facing forward and ordered from <i>tallest</i> to <i>shortest</i>. You will not be able to look behind you or step out of line. <br>
+Each of you will have either a <span style="color:blue">blue</span> or a <span style="color: red">red</span> hat, assigned randomly and no one will be told how many of each colour there are. When I tell you to begin, each of you must guess the colour of your hat, starting from the person in the back and moving down the line.
 Don't even think to say words other than <span style="color:blue">blue</span> or <span style="color: red">red</span> or signal something with intonation for instance. <br><i><b>Else, you will all be eaten immediately! </b></i> 
 <br>If at least the total number of you minus 1 guess the colour correctly, you will be spared. You are given a couple of minutes to discuss a strategy before we start!"</center></p>
 
@@ -53,61 +54,61 @@ The game's goal is to have as many of the agents correctly guess their hat colou
 <!--When the first agent has answered, the common knowledge of the others gets immediately adjusted. The number of possible worlds decrements when the previous agent(s) has indicated whether he sees an odd or even number of blue hats in front of him. Combining previous answers with an agent's current..  
 -->
 
-# Implementation
+## Implementation
 
 A programme that solves this riddle can be found [here](https://github.com/LuciaBaldassini/MAS).
 
-# Analysis
+## Analysis
 
 Depending on the number of agents and the hat colours assigned to each of them, there are multiple different scenarios possible. 
 As an example, we will elaborate on the possible worlds in which three agents are participating in total. Each of the agents is either wearing a <span style="color: red">red</span> or <span style="color:blue">blue</span> hat.The following table indicates the 8 different scenarios that are possible in this situation. The arrows visualize the direction the particular agent is looking at and the color of the cell represents the agent's hat colour. 
 
 <table class="tg">
-<caption><i>The 8 different scenarios possible for 3 agents</i></caption>
+<caption><i>Table 1: The 8 different scenarios possible for 3 agents</i></caption>
 <tbody>
 <tr>
-<td bgcolor="FFEFD5">Scenarios</th>
-<td bgcolor="FFEFD5">Agent 3</th>
-<td bgcolor="FFEFD5">Agent 2</th>
-<td bgcolor="FFEFD5">Agent 1</th>
+<td bgcolor="FFEFD5"><center><font color="black">Scenarios</font></center></th>
+<td bgcolor="FFEFD5"><center><font color="black">Agent 3</font></center></th>
+<td bgcolor="FFEFD5"><center><font color="black">Agent 2</font></center></th>
+<td bgcolor="FFEFD5"><center><font color="black">Agent 1</font></center></th>
 </tr>
-<tr><td bgcolor="FFEFD5">1<br></td>
+<tr><td bgcolor="FFEFD5"><center><font color="black">1</font></center><br></td>
 <td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 
-<tr><td bgcolor="FFEFD5">2<br></td>
-<td bgcolor="FF0000"><b><center><b><font color="white"><font color="white">=></font></font></b></center></b></td>
+<tr><td bgcolor="FFEFD5"><center><font color="black">2</font></center><br></td>
+<td bgcolor="FF0000"><b><center><b><font color="white">=></font></font></b></center></b></td>
 <td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
 </tr>
 
-<tr><td bgcolor="FFEFD5">3<br></td>
+<tr><td bgcolor="FFEFD5"><center><font color="black">3</font></center><br></td>
 <td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 
-<tr><td bgcolor="FFEFD5">4<br></td>
+<tr><td bgcolor="FFEFD5"><center><font color="black">4</font></center><br></td>
 <td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 
-<tr><td bgcolor="FFEFD5">5<br></td>
+<tr><td bgcolor="FFEFD5"><center><font color="black">5</font></center><br></td>
 <td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 
-<tr><td bgcolor="FFEFD5">6<br></td>
+<tr><td bgcolor="FFEFD5"><center><font color="black">6</font></center><br></td>
 <td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 
-<tr><td bgcolor="FFEFD5">7<br></td>
+<tr><td bgcolor="FFEFD5"><center><font color="black">7</font></center><br></td>
 <td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 
-<tr><td bgcolor="FFEFD5">8<br></td>
+<tr><td bgcolor="FFEFD5"><center><font color="black">8</font></center><br></td>
 <td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
 <td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td></tr>
@@ -115,36 +116,36 @@ As an example, we will elaborate on the possible worlds in which three agents ar
 </table>
 
 
-<h3>Example Scenario 4</h3>
+# Example Analysis Scenario 4
 In order to analyze the problem, we will present an example and go through all the agents' announcements and the changes to the Kripke model. This way, we can explore how the knowledge of the agents change. 
 
 In our example, <span style="color:#00FF00">Agent 1</span> (the smallest agent) will be wearing a <span style="color:blue">blue</span> hat. <span style="color:#FF8000">Agent 2</span> (the middle agent) will also be wearing a <span style="color:blue">blue</span> hat. <span style="color:#007FFF">Agent 3</span> (the tallest agent) will be wearing a <span style="color:red">red</span> hat. 
 
-```{r prisoners, echo=FALSE, out.width = '30%'}
+```{r prisoners, echo=FALSE, out.width = '30%', fig.align='center'}
 knitr::include_graphics("pictures/Prisoners_rbb.png")
 ```
 
 Initially, we could draw the following Kripke model: 
 
-```{r model no relations, echo=FALSE, out.width = '50%'}
+```{r model no relations, echo=FALSE, out.width = '50%', fig.align='center'}
 knitr::include_graphics("pictures/hats_rbb_agent3,2,1.png")
 ```
 
 Firstly, <span style="color:#007FFF">Agent 3</span> will announce <span style="color:red">red</span> to indicate that he sees an even number of <span style="color:red">red</span> hats (namely, 0). Both <span style="color:#FF8000">Agent 2</span> and <span style="color:#00FF00">Agent 1</span> now know this information. Hence, the Kripke model is updated to: 
 
-```{r model after 3, echo=FALSE, out.width = '50%'}
+
+```{r model after 3, echo=FALSE, out.width = '50%', fig.align='center'}
 knitr::include_graphics("pictures/hats_rbb_after3.png")
 ```
 
 <span style="color:#FF8000">Agent 2</span> now knows that the real world is either &#60;r,b,b&#62; or &#60;b,b,b&#62; but it at least knows for sure the colour of its hat is <span style="color:blue">blue</span> and announces this. Because of this announcement, <span style="color:#00FF00">Agent 1</span> now has to update the knowledge that there is an even number of <span style="color:red">red</span> hats to the fact that the remaining hats now include an odd number of <span style="color:red">red</span> hats. The Kripke model is updated to: 
 
-```{r model after 3 and 2, echo=FALSE, out.width = '50%'}
+```{r model after 3 and 2, echo=FALSE, out.width = '50%', fig.align='center'}
 knitr::include_graphics("pictures/hats_rbb_after3,2.png")
 ```
 
 Just like <span style="color:#FF8000">Agent 2</span>, <span style="color:#00FF00">Agent 1</span> now knows that the real world is either &#60;r,b,b&#62; or &#60;b,b,b&#62;. Therefore, <span style="color:#00FF00">Agent 1</span> can conclude that the colour of its own hat is <span style="color:blue">blue</span>, solving the riddle. 
 
 </div>
-
-</font>
+ 
 </body>
