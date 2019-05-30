@@ -9,10 +9,6 @@ author:
 - Lucia Baldassini
 - Dani&euml;lle Metz
 - Julia Mol 
-runtime: shiny
-output:
-  html_document:
-    theme: lumen
 ---
 
 ```{r setup, include=FALSE}
