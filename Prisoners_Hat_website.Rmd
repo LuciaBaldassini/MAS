@@ -38,7 +38,7 @@ Don't even think to say words other than <span style="color:blue">blue</span> or
 <!--<font color="olive"><center><i>Can you think of a strategy guaranteed to save everyone?</i> </center></font>
 -->
 
-## Strategy
+### Strategy
 
 The strategy to win this game and be freed by the aliens is to agree that whichever individual has to give an answer, says:
 <ul>
@@ -55,6 +55,11 @@ The game's goal is to have as many of the agents correctly guess their hat colou
 -->
 
 ## Implementation
+
+To solve the riddle we built a system that is run from the command line. At the beginning, the system will ask the user whether (s)he would like to read the descirption of the riddle or not. Next, the user can select the amount of agents and whether or not to assign a hat colour for each agent. In case the user does not want to manually input a hat colour, these will be assigned randomly. The system will then show a table containing each agent, their hat colour and how many <span style="color:red">red</span> and <span style="color:blue">blue</span> hats each agent see. Throughout the programme, we adopt the convention that the tallest agent is represented by the agent with the highest number and the shortest agent is represented by the agent with the lowest number. 
+
+Each agent is created from a class ```Agent()``` which stored the agent number, the colour of the hat and the number of hats in front of him. The main programme contains the dialogues with the user and a several functions. The function ```assignRandomHat``` and ```assignUserHat``` assign a random hat colour or the colour input by the user, respectively. The function ```showHatDistribution``` can be called to print the distiributions of the hats among the agents. Lastly, the function ```countHat``` counts, for each agent, the amount of blue and red hats seen by the agents. 
+
 
 A programme that solves this riddle can be found [here](https://github.com/LuciaBaldassini/MAS).
 
@@ -116,7 +121,7 @@ As an example, we will elaborate on the possible worlds in which three agents ar
 </table>
 
 
-# Example Analysis Scenario 4
+### Example Analysis Scenario 4
 In order to analyze the problem, we will present an example and go through all the agents' announcements and the changes to the Kripke model. This way, we can explore how the knowledge of the agents change. 
 
 In our example, <span style="color:#00FF00">Agent 1</span> (the smallest agent) will be wearing a <span style="color:blue">blue</span> hat. <span style="color:#FF8000">Agent 2</span> (the middle agent) will also be wearing a <span style="color:blue">blue</span> hat. <span style="color:#007FFF">Agent 3</span> (the tallest agent) will be wearing a <span style="color:red">red</span> hat. 
