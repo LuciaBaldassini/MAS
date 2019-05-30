@@ -13,7 +13,7 @@ runtime: shiny
 output:
   prettydoc::html_pretty:
     toc: true 
-    theme: hpstr
+    theme: cayman
     highlight: github
 ---
 
@@ -29,8 +29,8 @@ The aliens tell you the following:</i> </center></font>
 
 <font face = "times new roman">
 <p><center> "You will be placed in a line, facing forward and ordered from <i>tallest</i> to <i>shortest</i>. <br>You will not be able to look behind you or step out of line. <br>
-Each of you will have either a <span style="color:deepskyblue">blue</span> or a <span style="color: crimson">red</span> hat, assigned randomly and no one will be told how many of each colour there are. When I tell you to begin, each of you must guess the colour of your hat, starting from the person in the back and moving down the line. <br>
-Don't even think to say words other than <span style="color:deepskyblue">blue</span> or <span style="color: crimson">red</span> or signal something with intonation for instance. <br><i><b>Else, you will all be eaten immediately! </b></i> 
+Each of you will have either a <span style="color:blue">blue</span> or a <span style="color: red">red</span> hat, assigned randomly and no one will be told how many of each colour there are. When I tell you to begin, each of you must guess the colour of your hat, starting from the person in the back and moving down the line. <br>
+Don't even think to say words other than <span style="color:blue">blue</span> or <span style="color: red">red</span> or signal something with intonation for instance. <br><i><b>Else, you will all be eaten immediately! </b></i> 
 <br>If at least the total number of you minus 1 guess the colour correctly, you will be spared. You are given a couple of minutes to discuss a strategy before we start!"</center></p>
 
 
@@ -41,8 +41,8 @@ Don't even think to say words other than <span style="color:deepskyblue">blue</s
 
 The strategy to win this game and be freed by the aliens is to agree that whichever individual has to give an answer, says:
 <ul>
-<li> <span style="color:deepskyblue">Blue</span> to indicate that he sees an odd number of <span style="color:crimson">red</span> hats in front of him.</li>
-<li><span style="color:crimson">Red</span> to indicate that he sees an even number of <span style="color:crimson">red</span> hats in front of him. </li>
+<li> <span style="color:blue">Blue</span> to indicate that he sees an odd number of <span style="color:red">red</span> hats in front of him.</li>
+<li><span style="color:red">Red</span> to indicate that he sees an even number of <span style="color:red">red</span> hats in front of him. </li>
 </ul>
 As all agents are trustworthy, each agent can fully rely on the fact that each agent applies the strategy accordingly (and thus, honestly). <br>
 
@@ -60,7 +60,7 @@ A programme that solves this riddle can be found [here](https://github.com/Lucia
 # Analysis
 
 Depending on the number of agents and the hat colours assigned to each of them, there are multiple different scenarios possible. 
-As an example, we will elaborate on the possible worlds in which three agents are participating in total. Each of the agents is either wearing a <span style="color: crimson">red</span> or <span style="color:deepskyblue">blue</span> hat.The following table indicates the 8 different scenarios that are possible in this situation. The arrows visualize the direction the particular agent is looking at and the color of the cell represents the agent's hat colour. 
+As an example, we will elaborate on the possible worlds in which three agents are participating in total. Each of the agents is either wearing a <span style="color: red">red</span> or <span style="color:blue">blue</span> hat.The following table indicates the 8 different scenarios that are possible in this situation. The arrows visualize the direction the particular agent is looking at and the color of the cell represents the agent's hat colour. 
 
 <table class="tg">
 <caption><i>The 8 different scenarios possible for 3 agents</i></caption>
@@ -72,50 +72,50 @@ As an example, we will elaborate on the possible worlds in which three agents ar
 <td bgcolor="FFEFD5">Agent 1</th>
 </tr>
 <tr><td bgcolor="FFEFD5">1<br></td>
-<td bgcolor="F08080"><b>=></b></td>
-<td bgcolor="F08080"><b>=></b></td>
-<td bgcolor="F08080"><b>=></b></td></tr>
+<td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 
 <tr><td bgcolor="FFEFD5">2<br></td>
-<td bgcolor="F08080"><b>=></b></td>
-<td bgcolor="F08080"><b>=></b></td>
-<td bgcolor="87CEFA"><b>=></b></td>
+<td bgcolor="FF0000"><b><center><b><font color="white"><font color="white">=></font></font></b></center></b></td>
+<td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
 </tr>
 
 <tr><td bgcolor="FFEFD5">3<br></td>
-<td bgcolor="F08080"><b>=></b></td>
-<td bgcolor="87CEFA"><b>=></b></td>
-<td bgcolor="F08080"><b>=></b></td></tr>
+<td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 
 <tr><td bgcolor="FFEFD5">4<br></td>
-<td bgcolor="F08080"><b>=></b></td>
-<td bgcolor="87CEFA"><b>=></b></td>
-<td bgcolor="87CEFA"><b>=></b></td></tr>
+<td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 
 <tr><td bgcolor="FFEFD5">5<br></td>
-<td bgcolor="87CEFA"><b>=></b></td>
-<td bgcolor="87CEFA"><b>=></b></td>
-<td bgcolor="87CEFA"><b>=></b></td></tr>
+<td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 
 <tr><td bgcolor="FFEFD5">6<br></td>
-<td bgcolor="87CEFA"><b>=></b></td>
-<td bgcolor="87CEFA"><b>=></b></td>
-<td bgcolor="F08080"><b>=></b></td></tr>
+<td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 
 <tr><td bgcolor="FFEFD5">7<br></td>
-<td bgcolor="87CEFA"><b>=></b></td>
-<td bgcolor="F08080"><b>=></b></td>
-<td bgcolor="87CEFA"><b>=></b></td></tr>
+<td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 
 <tr><td bgcolor="FFEFD5">8<br></td>
-<td bgcolor="87CEFA"><b>=></b></td>
-<td bgcolor="F08080"><b>=></b></td>
-<td bgcolor="F08080"><b>=></b></td></tr>
+<td bgcolor="0000FF"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td>
+<td bgcolor="FF0000"><b><center><b><font color="white">=></font></b></center></b></td></tr>
 </tbody>
 </table>
 
-..
-<h3>Example vsx  2  1 </h3>
+
+<h3>Example Scenario 4</h3>
 In order to analyze the problem, we will present an example and go through all the agents' announcements and the changes to the Kripke model. This way, we can explore how the knowledge of the agents change. 
 
 In our example, <span style="color:#00FF00">Agent 1</span> (the smallest agent) will be wearing a <span style="color:blue">blue</span> hat. <span style="color:#FF8000">Agent 2</span> (the middle agent) will also be wearing a <span style="color:blue">blue</span> hat. <span style="color:#007FFF">Agent 3</span> (the tallest agent) will be wearing a <span style="color:red">red</span> hat. 
