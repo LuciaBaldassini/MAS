@@ -8,21 +8,20 @@ knit: (function(input_file, encoding) {
 author:
 - Lucia Baldassini
 - Dani&euml;lle Metz
-- Julia Mol
+- Julia Mol 
 runtime: shiny
 output:
-  prettydoc::html_pretty:
-    toc: true 
-    theme: cayman
-    highlight: github
+  html_document:
+    theme: lumen
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-<body style="background-color:papayawhip; font-family:Georgia">
 
-## Description of the riddle
+
+# {.tabset .tabset-fade}
+## Description of the riddle 
 
 
 <font face="apple chancery" color="olive"><center><i>You and other individuals have been captured by super-intelligent aliens! The aliens think agents look quite tasty, but luckily for you, their civilization forbids eating highly logical and cooperative beings. They are not sure whether you qualify, so they decide to give you all a test to figure that out. 
@@ -153,4 +152,4 @@ Just like <span style="color:#FF8000">Agent 2</span>, <span style="color:#00FF00
 
 </div>
  
-</body>
+  
