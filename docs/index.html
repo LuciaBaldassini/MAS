@@ -715,16 +715,8 @@ background-color: #00A698 !important;
 }
 
 table {
-font-family: arial, sans-serif;
-border-collapse: collapse;
-width: 50%;
+margin: 2em 0 2em 0;
 }
-
-td, th {
-  border: 1px solid #dddddd;
-  padding: 3px;
-}
-
 .page h1 {
 margin-bottom: 1em;
 }
@@ -876,6 +868,7 @@ $(document).ready(function () {
         <div id="toc">
         <ul>
         <li><a href="#description-of-the-riddle">Description of the riddle</a></li>
+        <li><a href="#strategy">Strategy</a></li>
         <li><a href="#implementation">Implementation</a></li>
         <li><a href="#analysis">Analysis</a></li>
         </ul>
@@ -904,8 +897,9 @@ $(document).ready(function () {
 </p>
 <!--<font color="olive"><center><i>Can you think of a strategy guaranteed to save everyone?</i> </center></font>
 -->
-<div id="strategy" class="section level3">
-<h3>Strategy</h3>
+</div>
+<div id="strategy" class="section level1">
+<h1>Strategy</h1>
 The strategy to win this game and be freed by the aliens is to agree that whichever individual has to give an answer, says:
 <ul>
 <li>
@@ -920,7 +914,6 @@ The strategy to win this game and be freed by the aliens is to agree that whiche
 <p>The game’s goal is to have as many of the agents correctly guess their hat colour. The game is successfully played if the number of hats minus 1, is collectively reached. Therefore, using the technique mentioned above, the game is always played successfully, since only the tallest agent is unsure.</p>
 <!--When the first agent has answered, the common knowledge of the others gets immediately adjusted. The number of possible worlds decrements when the previous agent(s) has indicated whether he sees an odd or even number of blue hats in front of him. Combining previous answers with an agent's current..  
 -->
-</div>
 </div>
 <div id="implementation" class="section level1">
 <h1>Implementation</h1>

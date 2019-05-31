@@ -34,7 +34,7 @@ Don't even think to say words other than <span style="color:blue">blue</span> or
 <!--<font color="olive"><center><i>Can you think of a strategy guaranteed to save everyone?</i> </center></font>
 -->
 
-### Strategy
+# Strategy
 
 The strategy to win this game and be freed by the aliens is to agree that whichever individual has to give an answer, says:
 <ul>
