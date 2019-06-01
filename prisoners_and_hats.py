@@ -74,23 +74,36 @@ def createAgentKnowledge(agents,n,hats):
 	
 	   
 if __name__ == '__main__':
-	descriptionChoice= str(input("Welcome, would you like to read the description of this riddle? [yes/no] \n"))
+	while True:
+		descriptionChoice= str(input("Welcome, would you like to read the description of this riddle? [yes/no] \n"))
+		if (descriptionChoice != "yes" and descriptionChoice != "no"):
+			print("Please enter either yes or no.")
+			continue
+		else:
+			break
 	if(descriptionChoice=="yes"):
 		with open('description.txt', 'r') as d:
 			print(d.read())
-	number_prisoners = int(input("How many prisoners would you like? \n"))
+	while True:
+		number_prisoners = int(input("How many prisoners would you like? \n"))
+		if (number_prisoners<2):
+			print("Please input at least 2 agents")
+			continue
+		else:
+			break
 	print("You chose", number_prisoners, "prisoners")
-	hatChoice=str(input("Do you want to choose a hat colour yourself for each agent (if not, this will be done automatically)[yes/no]?"))   
+	while True:
+		hatChoice=str(input("Do you want to choose a hat colour yourself for each agent (if not, this will be done automatically)[yes/no]?"))   
+		if (hatChoice != "yes" and hatChoice != "no"):
+			print("Please enter either yes or no.")
+			continue
+		else:
+			break
 	if(hatChoice=='yes'):
 		a,h=assignHatUser(number_prisoners)
-		#print("This is the knowledge of the agents before any assignment:\n")
-		createAgentKnowledge(a,number_prisoners,h)
 	elif(hatChoice=='no'):
 		a,h=assignRandomHat(number_prisoners)
-		#print("This is the knowledge of the agents before any assignment:\n")
-		createAgentKnowledge(a,number_prisoners,h)
-	else:
-		print("Please input either yes or no")   
+	createAgentKnowledge(a,number_prisoners,h)
 
     
     
