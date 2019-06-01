@@ -45,15 +45,19 @@ def assignHatUser(n):
 	print("The agents are distributed like this (from tallest to shortest):",list(reversed(hats)))
 	return agents,hats
 
+
 def countHats(agent,agents):
-	numberBlueHats=0
+	#numberBlueHats=0
 	numberRedHats=0
 	for a in agents[:agent.size-1]:
-		if(a.colourHat=='blue'):
-			numberBlueHats += 1
-		elif(a.colourHat=='red'):
+		#if(a.colourHat=='blue'):
+			#numberBlueHats += 1
+		if(a.colourHat=='red'):
 			numberRedHats += 1
-	return numberBlueHats,numberRedHats
+	if numberRedHats % 2 == 0:
+		return 'red'
+	else:
+		return 'blue'
 		
 	
 		
@@ -64,13 +68,19 @@ def createAgentKnowledge(agents,n,hats):
 	#	df = df.append({'Agent': agent.size,'hatColour':agent.colourHat,'numberOfRedHats':redCount,'numberOfBlueHats':blueCount,'K_agent(hatColour)':'no'}, ignore_index=True)
 	# creates all possible worlds
 	allWorlds=list(product(['blue','red'],repeat = n))
-	#print(allWorlds)
-	#print(agents)
-	#print(df)
 	kripke = Kripke.Kripke(agents,allWorlds,hats)
 	model=kripke.createKripkeModel()
 	print("The Kripke model before any announcement is made is:")
 	print(dict(model))
+	return model
+
+def announcementLoop(agents,model):
+	for agent in reversed(agents):
+		if(agent.size != 1):
+			print("Agent",agent.size,"announces:")
+			number = countHats(agent,agents)
+			print('"',number,'"')
+			#model.updateKripke()
 	
 	   
 if __name__ == '__main__':
@@ -103,7 +113,8 @@ if __name__ == '__main__':
 		a,h=assignHatUser(number_prisoners)
 	elif(hatChoice=='no'):
 		a,h=assignRandomHat(number_prisoners)
-	createAgentKnowledge(a,number_prisoners,h)
+	m=createAgentKnowledge(a,number_prisoners,h)
+	announcementLoop(a,m)
 
     
     
