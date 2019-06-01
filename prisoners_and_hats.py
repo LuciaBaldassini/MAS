@@ -6,6 +6,7 @@ Created on Sun May 12 14:26:47 2019
 """
 import numpy as np 
 import Agent
+import Kripke
 import pandas as pd
 from itertools import product
 
@@ -21,13 +22,8 @@ def assignRandomHat(n):
 		hats.append(new_agent.colourHat)
 		agents.append(new_agent)
 		i += 1
-	#showHatDistribution(agents)
-	return agents
-		
-# this function might not be necessary    
-def showHatDistribution(agents):
-	for agent in reversed(agents):
-		print(agent)
+	print("The agents are distributed like this (from tallest to shortest):",list(reversed(hats)))
+	return agents,hats
 		
 def assignHatUser(n):
 	agents = []
@@ -46,8 +42,8 @@ def assignHatUser(n):
 		hats.append(new_agent.colourHat) # add after so agents own hat is not added to list
 		agents.append(new_agent)
 		i += 1
-	showHatDistribution(agents)
-	return agents
+	print("The agents are distributed like this (from tallest to shortest):",list(reversed(hats)))
+	return agents,hats
 
 def countHats(agent,agents):
 	numberBlueHats=0
@@ -61,14 +57,21 @@ def countHats(agent,agents):
 		
 	
 		
-def createAgentKnowledge(agents,n):
-	df = pd.DataFrame(columns=['Agent','hatColour','numberOfRedHats','numberOfBlueHats','K_agent(hatColour)'])
-	for agent in reversed(agents):
-		blueCount,redCount=countHats(agent,agents)
-		df = df.append({'Agent': agent.size,'hatColour':agent.colourHat,'numberOfRedHats':redCount,'numberOfBlueHats':blueCount,'K_agent(hatColour)':'no'}, ignore_index=True)
+def createAgentKnowledge(agents,n,hats):
+	#df = pd.DataFrame(columns=['Agent','hatColour','numberOfRedHats','numberOfBlueHats','K_agent(hatColour)'])
+	#for agent in reversed(agents):
+	#	blueCount,redCount=countHats(agent,agents)
+	#	df = df.append({'Agent': agent.size,'hatColour':agent.colourHat,'numberOfRedHats':redCount,'numberOfBlueHats':blueCount,'K_agent(hatColour)':'no'}, ignore_index=True)
+	# creates all possible worlds
 	allWorlds=list(product(['blue','red'],repeat = n))
-	print(allWorlds)
-	print(df)
+	#print(allWorlds)
+	#print(agents)
+	#print(df)
+	kripke = Kripke.Kripke(agents,allWorlds,hats)
+	model=kripke.createKripkeModel()
+	print("The Kripke model before any announcement is made is:")
+	print(dict(model))
+	
 	   
 if __name__ == '__main__':
 	descriptionChoice= str(input("Welcome, would you like to read the description of this riddle? [yes/no] \n"))
@@ -79,13 +82,13 @@ if __name__ == '__main__':
 	print("You chose", number_prisoners, "prisoners")
 	hatChoice=str(input("Do you want to choose a hat colour yourself for each agent (if not, this will be done automatically)[yes/no]?"))   
 	if(hatChoice=='yes'):
-		a=assignHatUser(number_prisoners)
-		print("This is the knowledge of the agents before any assignment:\n")
-		createAgentKnowledge(a)
+		a,h=assignHatUser(number_prisoners)
+		#print("This is the knowledge of the agents before any assignment:\n")
+		createAgentKnowledge(a,number_prisoners,h)
 	elif(hatChoice=='no'):
-		a=assignRandomHat(number_prisoners)
-		print("This is the knowledge of the agents before any assignment:\n")
-		createAgentKnowledge(a,number_prisoners)
+		a,h=assignRandomHat(number_prisoners)
+		#print("This is the knowledge of the agents before any assignment:\n")
+		createAgentKnowledge(a,number_prisoners,h)
 	else:
 		print("Please input either yes or no")   
 
