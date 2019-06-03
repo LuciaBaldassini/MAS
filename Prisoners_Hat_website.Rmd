@@ -162,3 +162,7 @@ Because <span style="color:#00FF00">Agent 1</span> knows that there is an even n
 
 </div>
 
+# Further implementation
+
+The system could be expanded to solve riddles similar to the Prisoner and Hat riddle.
+
