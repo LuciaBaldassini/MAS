@@ -10,10 +10,9 @@ import Kripke
 import pandas as pd
 from itertools import product
 
+# randomly assign a hat colour to each agent
 def assignRandomHat(n):
 	agents = []  
-    # obtain and store the colours of the hats
-	#print("\nPlease type the colours of the hats of the prisoners from the smallest prisoner to the largest. \nPlease choose only \"red\" or \"blue\"")
 	hats = []
 	i = 1
 	while i < number_prisoners+1:
@@ -24,7 +23,8 @@ def assignRandomHat(n):
 		i += 1
 	print("The agents are distributed like this (from tallest to shortest):",list(reversed(hats)))
 	return agents,hats
-		
+
+# let the user assign a hat colour for each agent		
 def assignHatUser(n):
 	agents = []
 	print("\nType the colours of the hats of the prisoners. \nPlease choose only \"red\" or \"blue\"")
@@ -45,13 +45,10 @@ def assignHatUser(n):
 	print("The agents are distributed like this (from tallest to shortest):",list(reversed(hats)))
 	return agents,hats
 
-
+# counts the number of red hats and checks whether to ouput red or blue
 def countHats(agent,agents):
-	#numberBlueHats=0
 	numberRedHats=0
 	for a in agents[:agent.size-1]:
-		#if(a.colourHat=='blue'):
-			#numberBlueHats += 1
 		if(a.colourHat=='red'):
 			numberRedHats += 1
 	if numberRedHats % 2 == 0:
@@ -60,28 +57,40 @@ def countHats(agent,agents):
 		return 'blue'
 		
 	
-		
+# creates the knowledge of each agent at the beginning of the riddle (before any announcements)		
 def createAgentKnowledge(agents,n,hats):
-	#df = pd.DataFrame(columns=['Agent','hatColour','numberOfRedHats','numberOfBlueHats','K_agent(hatColour)'])
-	#for agent in reversed(agents):
-	#	blueCount,redCount=countHats(agent,agents)
-	#	df = df.append({'Agent': agent.size,'hatColour':agent.colourHat,'numberOfRedHats':redCount,'numberOfBlueHats':blueCount,'K_agent(hatColour)':'no'}, ignore_index=True)
-	# creates all possible worlds
-	allWorlds=list(product(['blue','red'],repeat = n))
-	kripke = Kripke.Kripke(agents,allWorlds,hats)
+	allWorlds=list(product(['blue','red'],repeat = n)) # creates all possible worlds
+	kripke = Kripke.Kripke(agents,allWorlds,hats) # define a new Kripke model
 	model=kripke.createKripkeModel()
 	print("The Kripke model before any announcement is made is:")
 	print(dict(model))
 	return model
 
-def announcementLoop(agents,model):
+def announcementLoop(agents,model,n):
 	for agent in reversed(agents):
-		if(agent.size != 1):
+		if(agent.size == n):
 			print("Agent",agent.size,"announces:")
-			number = countHats(agent,agents)
+			number = countHats(agent,agents) # decide if the amount of red hats in front is even or odd
 			print('"',number,'"')
-			#model.updateKripke()
-	
+		updateKripke(model,agent,number)
+		print(dict(m))
+		print('new loop')
+
+# update the model for each agent afer the announcements			
+def updateKripke(m,a,number):
+	for agent,worlds in m.items(): 
+		if(agent<a.size): #only update the knowledge of the agents in front of a given agent
+			toRemove=[]
+			for w in worlds:
+				worldSubset=w[-(a.size-1):len(w)] # look in the subset world from the agent that just spoke till the end
+				if(number=='red'):
+					if(worldSubset.count('red') %2 != 0):
+						toRemove.append(w) # append the world to be removed to a list
+				else:
+					if(w.worldSubset('red') %2 == 0):
+						m[agent].remove(w)
+			for i in toRemove: # remove the list of worlds from the dictionary
+				m[agent].remove(i)
 	   
 if __name__ == '__main__':
 	while True:
@@ -114,7 +123,7 @@ if __name__ == '__main__':
 	elif(hatChoice=='no'):
 		a,h=assignRandomHat(number_prisoners)
 	m=createAgentKnowledge(a,number_prisoners,h)
-	announcementLoop(a,m)
+	#announcementLoop(a,m,number_prisoners)
 
     
     

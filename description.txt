@@ -5,9 +5,9 @@ The aliens tell you the following:
 
 Can you think of a strategy guaranteed to save everyone? 
 
-The strategy to win this game and be freed by the aliens is to agree that whichever individual has to give an answer, says: 
+The strategy to win this game and be freed by the aliens is to agree that whoever starts, says: 
 
 	Blue to indicate that he sees an odd number of red hats in front of him.
    	Red to indicate that he sees an even number of red hats in front of him.
 
- He will proabably guess his hat wrong, but that's okay because it is allowed to commit one mistake.
+He will proabably guess his hat wrong, but that's okay because it is allowed to commit one mistake.The other agents will deduce their hat colours based on the announcements made by the previous agents and the colour of the hats they see.
