@@ -71,9 +71,6 @@ def createAgentKnowledge(agents,n,hats):
 	allWorlds=list(product(['blue','red'],repeat = n)) # creates all possible worlds
 	kripke = Kripke.Kripke(agents,allWorlds,hats) # define a new Kripke model
 	model=kripke.createKripkeModel()
-	#kripkeChoice= str(input("Would you like to inspect the Kripke model? [yes/no] \n"))
-	#print("The Kripke model before any announcement is made is:")
-	#print(dict(model))
 	return model
 
 def announcementLoop(agents,model,n):
@@ -108,7 +105,6 @@ def announcementLoop(agents,model,n):
 
 # update the model for each agent afer the announcements			
 def updateKripke(m,a,commonKnowledge, counter):
-	#print(a.size)	
 	for agent,worlds in m.items(): 
 		if(agent<a.size): #only update the knowledge of the agents in front of the agent that just spoke	
 			toRemove=[]
@@ -136,7 +132,6 @@ def deduceHatColour(a,m,counter):
 		for nextWorld in range(1,len(worlds)):
 			if(worlds[w][counter]==worlds[nextWorld][counter]): # compare if the element in the position of the agent is the same for all worlds
 				color=worlds[w][counter]
-				#print(color)
 				knowsHat=1
 	if(knowsHat == 1):
 		return color
