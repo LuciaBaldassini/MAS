@@ -56,8 +56,6 @@ def countHats(agent,agents):
 	else:
 		return 'blue'
 		
-	
-<<<<<<< HEAD
 		
 def createAgentKnowledge(agents,n):
 	df = pd.DataFrame(columns=['Agent','hatColour','numberOfRedHats','numberOfBlueHats','K_agent(hatColour)'])
@@ -68,43 +66,93 @@ def createAgentKnowledge(agents,n):
 	allWorlds=list(product(['blue','red'],repeat = n))
 	print(allWorlds)
 
-=======
 # creates the knowledge of each agent at the beginning of the riddle (before any announcements)		
 def createAgentKnowledge(agents,n,hats):
 	allWorlds=list(product(['blue','red'],repeat = n)) # creates all possible worlds
 	kripke = Kripke.Kripke(agents,allWorlds,hats) # define a new Kripke model
 	model=kripke.createKripkeModel()
-	print("The Kripke model before any announcement is made is:")
-	print(dict(model))
+	#kripkeChoice= str(input("Would you like to inspect the Kripke model? [yes/no] \n"))
+	#print("The Kripke model before any announcement is made is:")
+	#print(dict(model))
 	return model
 
 def announcementLoop(agents,model,n):
-	for agent in reversed(agents):
+	counter = 0
+	commonKnowledge=[]
+	for agent in reversed(agents):	
+		# only first agent says red or blue to indicate odd or even
 		if(agent.size == n):
 			print("Agent",agent.size,"announces:")
 			number = countHats(agent,agents) # decide if the amount of red hats in front is even or odd
 			print('"',number,'"')
-		updateKripke(model,agent,number)
+			commonKnowledge.append(number) # the number of red hats is added as common knowledge
+			updateKripke(model,agent,commonKnowledge,counter)
+		else:
+			color=deduceHatColour(agent,model,counter)
+			print("Agent",agent.size,"announces:")
+			print('"',color,'"')
+			commonKnowledge.append(color)
+			updateKripke(model,agent,commonKnowledge,counter)
+		counter +=1
+		while True:
+			updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model? [yes/no] \n"))
+			if (updatedkripkeChoice != "yes" and updatedkripkeChoice != "no"):
+				print("Please enter either yes or no.")
+				continue
+			else:
+				break
+	if(updatedkripkeChoice=="yes"):
+		print("The Kripke model after announcement",counter,"is:")
 		print(dict(m))
-		print('new loop')
+	return commonKnowledge
 
 # update the model for each agent afer the announcements			
-def updateKripke(m,a,number):
+def updateKripke(m,a,commonKnowledge, counter):
+	#print(a.size)	
 	for agent,worlds in m.items(): 
-		if(agent<a.size): #only update the knowledge of the agents in front of a given agent
+		if(agent<a.size): #only update the knowledge of the agents in front of the agent that just spoke	
 			toRemove=[]
 			for w in worlds:
-				worldSubset=w[-(a.size-1):len(w)] # look in the subset world from the agent that just spoke till the end
-				if(number=='red'):
-					if(worldSubset.count('red') %2 != 0):
-						toRemove.append(w) # append the world to be removed to a list
-				else:
-					if(w.worldSubset('red') %2 == 0):
-						m[agent].remove(w)
+				worldSubset=w[1:len(w)] # remove the hat of the tallest player, this is not important
+				if(counter == 0): # the first common knowledge is the number of even and odd hats
+					if(commonKnowledge[counter]=='red'): # even number 
+						if(worldSubset.count('red') %2 != 0): # remove subworlds with an odd number of red hats
+							toRemove.append(w)
+					else: # odd number
+						if(worldSubset.count('red') %2 == 0): # remove subworlds with an even number of red hats
+							m[agent].remove(w)
+				else: 
+					if(worldSubset[counter-1]!=commonKnowledge[counter]):
+						toRemove.append(w)
 			for i in toRemove: # remove the list of worlds from the dictionary
 				m[agent].remove(i)
->>>>>>> lucia
-	   
+				
+# deduces the hat colour of an agent
+
+def deduceHatColour(a,m,counter):
+	worlds=m[a.size] # copy the worlds of a given agent
+	knowsHat=0
+	for w in range(0,len(worlds)):
+		for nextWorld in range(1,len(worlds)):
+			if(worlds[w][counter]==worlds[nextWorld][counter]): # compare if the element in the position of the agent is the same for all worlds
+				color=worlds[w][counter]
+				#print(color)
+				knowsHat=1
+	if(knowsHat == 1):
+		return color
+
+# check if at most one mistake has been commited
+def checkRiddle(c,h):
+	h.reverse()
+	numberOfMistakes=np.sum(c != h) # count number of dissimilar item
+	if(numberOfMistakes == 0):
+		print("Wow you are a highly intelligence specie, you will not be eaten!")
+	elif(numberOfMistakes == 1):
+		print("You are lucky, you made only one mistake so you will not be eaten!")
+	else:
+		print("Gnam gnam you all will be our dinner!!")
+	
+# contains the dialogue with the user	   
 if __name__ == '__main__':
 	while True:
 		descriptionChoice= str(input("Welcome, would you like to read the description of this riddle? [yes/no] \n"))
@@ -134,18 +182,22 @@ if __name__ == '__main__':
 	if(hatChoice=='yes'):
 		a,h=assignHatUser(number_prisoners)
 	elif(hatChoice=='no'):
-<<<<<<< HEAD
-		a=assignRandomHat(number_prisoners)
-		print("This is the knowledge of the agents before any assignment:\n")
-		createAgentKnowledge(a,number_prisoners)
+		a,h=assignRandomHat(number_prisoners)
 	else:
 		print("Please input either yes or no")   
-=======
-		a,h=assignRandomHat(number_prisoners)
 	m=createAgentKnowledge(a,number_prisoners,h)
-	#announcementLoop(a,m,number_prisoners)
->>>>>>> lucia
-
+	while True:
+		kripkeChoice= str(input("Would you like to inspect the initial Kripke model? [yes/no] \n"))
+		if (kripkeChoice != "yes" and kripkeChoice != "no"):
+			print("Please enter either yes or no.")
+			continue
+		else:
+			break
+	if(kripkeChoice=="yes"):
+		print("The Kripke model before any announcement is made is:")
+		print(dict(m))
+	c=announcementLoop(a,m,number_prisoners)
+	checkRiddle(c,h)
     
     
         
