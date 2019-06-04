@@ -8,7 +8,10 @@ import numpy as np
 import Agent
 import Kripke
 import pandas as pd
+import networkx as nx
+import matplotlib.pyplot as plt
 from itertools import product
+
 
 # randomly assign a hat colour to each agent
 def assignRandomHat(n):
@@ -98,9 +101,9 @@ def announcementLoop(agents,model,n):
 				continue
 			else:
 				break
-	if(updatedkripkeChoice=="yes"):
-		print("The Kripke model after announcement",counter,"is:")
-		print(dict(m))
+		if(updatedkripkeChoice=="yes"):
+			print("The Kripke model after announcement",counter,"is:")
+			print(dict(m))
 	return commonKnowledge
 
 # update the model for each agent afer the announcements			
