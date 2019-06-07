@@ -12,6 +12,8 @@ The packages required are:
 ```
 numpy
 pandas
+pygraphviz
+graphviz
 ```
 ## Collaborators
 [Danielle Metz](https://github.com/daniellemetz)
