@@ -11,6 +11,11 @@ import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
 from itertools import product
+import networkx as nx
+import matplotlib.pyplot as plt
+from networkx.drawing.nx_pydot import write_dot
+from networkx.drawing.nx_agraph import graphviz_layout, to_agraph
+import graphviz
 
 
 # randomly assign a hat colour to each agent
@@ -76,7 +81,7 @@ def createAgentKnowledge(agents,n,hats):
 	model=kripke.createKripkeModel()
 	return model
 
-def announcementLoop(agents,model,n):
+def announcementLoop(agents,model,n,hats):
 	counter = 0
 	commonKnowledge=[]
 	for agent in reversed(agents):	
@@ -104,8 +109,20 @@ def announcementLoop(agents,model,n):
 		if(updatedkripkeChoice=="yes"):
 			print("The Kripke model after announcement",counter,"is:")
 			print(dict(m))
+			printGraph(m,h)
 	return commonKnowledge
 
+def printGraph(m,h):
+	g = nx.MultiDiGraph() # create a multiGraph object
+	h.reverse()
+	g.add_node(tuple(h),style='filled',fillcolor='green')	# add the current world, in green
+	for key,value in m.items():
+		for w in range(0,len(value)):
+			g.add_edge(tuple(h),value[w],label=key,dir='both') # add an edge for each accessibility relations, nodes are created automatically. Each edge is labelled with the agent number
+		
+	A = to_agraph(g)
+	A.draw('kripkeModel.png', prog='dot') # print it to file
+				
 # update the model for each agent afer the announcements			
 def updateKripke(m,a,commonKnowledge, counter):
 	for agent,worlds in m.items(): 
@@ -125,9 +142,9 @@ def updateKripke(m,a,commonKnowledge, counter):
 						toRemove.append(w)
 			for i in toRemove: # remove the list of worlds from the dictionary
 				m[agent].remove(i)
+	
 				
 # deduces the hat colour of an agent
-
 def deduceHatColour(a,m,counter):
 	worlds=m[a.size] # copy the worlds of a given agent
 	knowsHat=0
@@ -194,7 +211,8 @@ if __name__ == '__main__':
 	if(kripkeChoice=="yes"):
 		print("The Kripke model before any announcement is made is:")
 		print(dict(m))
-	c=announcementLoop(a,m,number_prisoners)
+		printGraph(m,h)
+	c=announcementLoop(a,m,number_prisoners,h)
 	checkRiddle(c,h)
     
     
