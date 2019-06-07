@@ -7,13 +7,9 @@ Created on Sun May 12 14:26:47 2019
 import numpy as np 
 import Agent
 import Kripke
-import pandas as pd
 import networkx as nx
-import matplotlib.pyplot as plt
 from itertools import product
 import networkx as nx
-import matplotlib.pyplot as plt
-from networkx.drawing.nx_pydot import write_dot
 from networkx.drawing.nx_agraph import graphviz_layout, to_agraph
 import graphviz
 
@@ -64,16 +60,6 @@ def countHats(agent,agents):
 	else:
 		return 'blue'
 		
-		
-def createAgentKnowledge(agents,n):
-	df = pd.DataFrame(columns=['Agent','hatColour','numberOfRedHats','numberOfBlueHats','K_agent(hatColour)'])
-	for agent in reversed(agents):
-		blueCount,redCount=countHats(agent,agents)
-		df = df.append({'Agent': agent.size,'hatColour':agent.colourHat,'numberOfRedHats':redCount,'numberOfBlueHats':blueCount,'K_agent(hatColour)':'no'}, ignore_index=True)
-	print(df)
-	allWorlds=list(product(['blue','red'],repeat = n))
-	print(allWorlds)
-
 # creates the knowledge of each agent at the beginning of the riddle (before any announcements)		
 def createAgentKnowledge(agents,n,hats):
 	allWorlds=list(product(['blue','red'],repeat = n)) # creates all possible worlds
@@ -109,19 +95,22 @@ def announcementLoop(agents,model,n,hats):
 		if(updatedkripkeChoice=="yes"):
 			print("The Kripke model after announcement",counter,"is:")
 			print(dict(m))
-			printGraph(m,h)
+			printGraph(m,h,counter)
 	return commonKnowledge
 
-def printGraph(m,h):
+def printGraph(m,h,counter):
 	g = nx.MultiDiGraph() # create a multiGraph object
-	h.reverse()
-	g.add_node(tuple(h),style='filled',fillcolor='green')	# add the current world, in green
+	realWorld=h.copy()
+	print(realWorld)
+	realWorld.reverse()
+	print(realWorld)
+	g.add_node(tuple(realWorld),style='filled',fillcolor='green')	# add the current world, in green
 	for key,value in m.items():
 		for w in range(0,len(value)):
-			g.add_edge(tuple(h),value[w],label=key,dir='both') # add an edge for each accessibility relations, nodes are created automatically. Each edge is labelled with the agent number
+			g.add_edge(tuple(realWorld),value[w],label=key,dir='both') # add an edge for each accessibility relations, nodes are created automatically. Each edge is labelled with the agent number
 		
 	A = to_agraph(g)
-	A.draw('kripkeModel.png', prog='dot') # print it to file
+	A.draw("kripkeModel"+str(counter)+".png", prog='dot') # print it to file
 				
 # update the model for each agent afer the announcements			
 def updateKripke(m,a,commonKnowledge, counter):
@@ -211,7 +200,7 @@ if __name__ == '__main__':
 	if(kripkeChoice=="yes"):
 		print("The Kripke model before any announcement is made is:")
 		print(dict(m))
-		printGraph(m,h)
+		printGraph(m,h,0)
 	c=announcementLoop(a,m,number_prisoners,h)
 	checkRiddle(c,h)
     
