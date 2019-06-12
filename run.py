@@ -10,6 +10,7 @@ import numpy as np
 import Agent
 import utility
 import riddle1
+import riddle2
 
 	
 # contains the dialogue with the user	   
@@ -54,7 +55,7 @@ if __name__ == '__main__':
 	if (riddleChoice==1):   
 		riddle1.runRiddle1(a,number_prisoners,h)
 	elif(riddleChoice==2):
-		print("TO DO")
+		riddle2.runRiddle2(a,number_prisoners,h)
     
     
         

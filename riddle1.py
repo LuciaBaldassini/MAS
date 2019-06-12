@@ -23,6 +23,17 @@ def createAgentKnowledge(agents,n,hats):
 	allWorlds=list(product(['blue','red'],repeat = n)) # creates all possible worlds
 	kripke = Kripke.Kripke(agents,allWorlds,hats) # define a new Kripke model
 	model=kripke.createKripkeModel()
+	while True:
+		kripkeChoice= str(input("Would you like to inspect the initial Kripke model? [yes/no] \n"))
+		if (kripkeChoice != "yes" and kripkeChoice != "no"):
+			print("Please enter either yes or no.")
+			continue
+		else:
+			break
+	if(kripkeChoice=="yes"):
+		print("The Kripke model before any announcement is made is:")
+		print(dict(model))
+		printGraph(model,hats,0)
 	return model
 
 def announcementLoop(agents,model,n,hats):
@@ -52,8 +63,8 @@ def announcementLoop(agents,model,n,hats):
 				break
 		if(updatedkripkeChoice=="yes"):
 			print("The Kripke model after announcement",counter,"is:")
-			print(dict(m))
-			printGraph(m,h,counter)
+			print(dict(model))
+			printGraph(model,hats,counter)
 	return commonKnowledge
 
 def printGraph(m,h,counter):
@@ -63,8 +74,7 @@ def printGraph(m,h,counter):
 	g.add_node(tuple(realWorld),style='filled',fillcolor='green')	# add the current world, in green
 	for key,value in m.items():
 		for w in range(0,len(value)):
-			g.add_edge(tuple(realWorld),value[w],label=key,dir='both') # add an edge for each accessibility relations, nodes are created automatically. Each edge is labelled with the agent number
-		
+			g.add_edge(tuple(realWorld),value[w],label=key,dir='both') # add an edge for each accessibility relations, nodes are created automatically. Each edge is labelled with the agent number	
 	A = to_agraph(g)
 	A.draw("kripkeModel"+str(counter)+".png", prog='dot') # print it to file
 				
@@ -111,20 +121,11 @@ def checkRiddle(c,h):
 		print("You are lucky, you made only one mistake so you will not be eaten!")
 	else:
 		print("Gnam gnam you all will be our dinner!!")
-		
+
+
+# runs Riddle 1		
 def runRiddle1(a,number_prisoners,h):
-	m=createAgentKnowledge(a,number_prisoners,h)
-	while True:
-		kripkeChoice= str(input("Would you like to inspect the initial Kripke model? [yes/no] \n"))
-		if (kripkeChoice != "yes" and kripkeChoice != "no"):
-			print("Please enter either yes or no.")
-			continue
-		else:
-			break
-	if(kripkeChoice=="yes"):
-		print("The Kripke model before any announcement is made is:")
-		print(dict(m))
-		printGraph(m,h,0)
-	c=announcementLoop(a,m,number_prisoners,h)
+	m=createAgentKnowledge(a,number_prisoners,h) # creates the initial kripke model
+	c=announcementLoop(a,m,number_prisoners,h) # go in the announcement loop 
 	checkRiddle(c,h)
 	
