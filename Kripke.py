@@ -1,4 +1,3 @@
-from itertools import product
 import numpy as np
 from collections import defaultdict
 
@@ -12,14 +11,14 @@ class Kripke:
         
 	def createKripkeModel(self):
 		for a in self.agents:
-			if(a.size==1):
-					self.model[a.size]= self.worlds
+			if(a.id==1):
+					self.model[a.id]= self.worlds
 			else:
-				subArray=self.hats[:a.size-1]
+				subArray=self.hats[:a.id-1]
 				for w in self.worlds:
 					worldSubset=w[-len(subArray):len(w)]
 					if(np.array_equal(list(reversed(subArray)),worldSubset)):
-						self.model[a.size].append(w)
+						self.model[a.id].append(w)
 		return self.model
 		
 		
