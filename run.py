@@ -4,10 +4,6 @@ Created on Sun May 12 14:26:47 2019
 
 @author: danie and lucia
 """
-import getopt
-import sys
-import numpy as np 
-import Agent
 import utility
 import riddle1
 import riddle2

@@ -1,7 +1,12 @@
 import Agent
 import numpy as np
+import graphviz
+from pygraphviz import *
 
 # randomly assign a hat colour to each agent
+import Kripke
+from itertools import product
+
 def assignRandomHat(n,colorPossibility):
 	agents = []  
 	hats = []
@@ -35,3 +40,32 @@ def assignHatUser(n,colorPossibility):
 		i += 1
 	print("The agents are distributed like this (from tallest to shortest):",list(reversed(hats)))
 	return agents,hats
+	
+		
+# creates the knowledge of each agent at the beginning of the riddle (before any announcements)		
+def createAgentKnowledge(agents,n,hats):
+	allWorlds=list(product(hats,repeat = n)) # creates all possible worlds
+	kripke = Kripke.Kripke(agents,allWorlds,hats) # define a new Kripke model
+	model=kripke.createKripkeModel()
+	while True:
+		kripkeChoice= str(input("Would you like to inspect the initial Kripke model? [yes/no] \n"))
+		if (kripkeChoice != "yes" and kripkeChoice != "no"):
+			print("Please enter either yes or no.")
+			continue
+		else:
+			break
+	if(kripkeChoice=="yes"):
+		print("The Kripke model before any announcement is made is:")
+		#print(dict(model))
+		printGraph(model,hats,0)
+	return model
+	
+def printGraph(m,h,counter):
+	g=AGraph(rankdir='LR',ratio='auto')
+	realWorld=h.copy()
+	realWorld.reverse()
+	g.add_node(tuple(realWorld),style='filled',fillcolor='green')	# add the current world, in green
+	for key,value in m.items():
+		for w in range(0,len(value)):
+			g.add_edge(tuple(realWorld),value[w],label=key,dir='both') # add an edge for each accessibility relations, nodes are created automatically. Each edge is labelled with the agent number	
+	g.draw("kripkeModel"+str(counter)+".png", prog='dot') # print it to file

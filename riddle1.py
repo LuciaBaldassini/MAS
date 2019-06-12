@@ -1,10 +1,5 @@
-import Kripke
 import numpy as np
-import networkx as nx
-from itertools import product
-import networkx as nx
-from networkx.drawing.nx_agraph import graphviz_layout, to_agraph
-import graphviz
+import utility
 
 
 # counts the number of red hats and checks whether to ouput red or blue
@@ -17,24 +12,6 @@ def countHats(agent,agents):
 		return 'red'
 	else:
 		return 'blue'
-		
-# creates the knowledge of each agent at the beginning of the riddle (before any announcements)		
-def createAgentKnowledge(agents,n,hats):
-	allWorlds=list(product(['blue','red'],repeat = n)) # creates all possible worlds
-	kripke = Kripke.Kripke(agents,allWorlds,hats) # define a new Kripke model
-	model=kripke.createKripkeModel()
-	while True:
-		kripkeChoice= str(input("Would you like to inspect the initial Kripke model? [yes/no] \n"))
-		if (kripkeChoice != "yes" and kripkeChoice != "no"):
-			print("Please enter either yes or no.")
-			continue
-		else:
-			break
-	if(kripkeChoice=="yes"):
-		print("The Kripke model before any announcement is made is:")
-		print(dict(model))
-		printGraph(model,hats,0)
-	return model
 
 def announcementLoop(agents,model,n,hats):
 	counter = 0
@@ -64,19 +41,8 @@ def announcementLoop(agents,model,n,hats):
 		if(updatedkripkeChoice=="yes"):
 			print("The Kripke model after announcement",counter,"is:")
 			print(dict(model))
-			printGraph(model,hats,counter)
+			utility.printGraph(model,hats,counter)
 	return commonKnowledge
-
-def printGraph(m,h,counter):
-	g = nx.MultiDiGraph() # create a multiGraph object
-	realWorld=h.copy()
-	realWorld.reverse()
-	g.add_node(tuple(realWorld),style='filled',fillcolor='green')	# add the current world, in green
-	for key,value in m.items():
-		for w in range(0,len(value)):
-			g.add_edge(tuple(realWorld),value[w],label=key,dir='both') # add an edge for each accessibility relations, nodes are created automatically. Each edge is labelled with the agent number	
-	A = to_agraph(g)
-	A.draw("kripkeModel"+str(counter)+".png", prog='dot') # print it to file
 				
 # update the model for each agent afer the announcements			
 def updateKripke(m,a,commonKnowledge, counter):
@@ -125,7 +91,7 @@ def checkRiddle(c,h):
 
 # runs Riddle 1		
 def runRiddle1(a,number_prisoners,h):
-	m=createAgentKnowledge(a,number_prisoners,h) # creates the initial kripke model
+	m=utility.createAgentKnowledge(a,number_prisoners,h) # creates the initial kripke model
 	c=announcementLoop(a,m,number_prisoners,h) # go in the announcement loop 
 	checkRiddle(c,h)
 	
