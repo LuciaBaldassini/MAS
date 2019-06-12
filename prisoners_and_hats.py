@@ -4,6 +4,8 @@ Created on Sun May 12 14:26:47 2019
 
 @author: danie and lucia
 """
+import getopt
+import sys
 import numpy as np 
 import Agent
 import Kripke
@@ -101,9 +103,7 @@ def announcementLoop(agents,model,n,hats):
 def printGraph(m,h,counter):
 	g = nx.MultiDiGraph() # create a multiGraph object
 	realWorld=h.copy()
-	print(realWorld)
 	realWorld.reverse()
-	print(realWorld)
 	g.add_node(tuple(realWorld),style='filled',fillcolor='green')	# add the current world, in green
 	for key,value in m.items():
 		for w in range(0,len(value)):
@@ -158,16 +158,33 @@ def checkRiddle(c,h):
 	
 # contains the dialogue with the user	   
 if __name__ == '__main__':
+	fullCmdArguments = sys.argv
+	# - further arguments
+	argumentList = fullCmdArguments[1:]
+	unixOptions = "12"  
+	gnuOptions = ["variation1", "variation2"]  
+	try:  
+		arguments, values = getopt.getopt(argumentList, unixOptions, gnuOptions)
+	except getopt.error as err:  
+		# output error, and return with an error code
+		print (str(err))
+		sys.exit(2)
+	for currentArgument, currentValue in arguments:  
+		if currentArgument in ("-1", "--variation1"):
+			print ("variation1")
+		elif currentArgument in ("-2", "--variation2"):
+			print ("variation2")
+	print("Welcome, I am a highly intelligent riddle solver and today I am challenging you to solve one of these two riddles (or both). Do you dare? Read the two riddle belows:")
+	with open('description.txt', 'r') as d:
+			print(d.read())
 	while True:
-		descriptionChoice= str(input("Welcome, would you like to read the description of this riddle? [yes/no] \n"))
-		if (descriptionChoice != "yes" and descriptionChoice != "no"):
-			print("Please enter either yes or no.")
+		riddleChoice = int(input("Which riddle do you want to analyse? [1 or 2]"))
+		if (riddleChoice != 1 and riddleChoice!= 2):
+			print("Please choose either 1 or 2")
 			continue
 		else:
 			break
-	if(descriptionChoice=="yes"):
-		with open('description.txt', 'r') as d:
-			print(d.read())
+	print("You chose riddle", riddleChoice)
 	while True:
 		number_prisoners = int(input("How many prisoners would you like? \n"))
 		if (number_prisoners<2):

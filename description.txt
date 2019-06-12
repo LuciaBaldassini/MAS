@@ -1,3 +1,6 @@
+RIDDLE 1 :THE PRISONER AND HAT RIDDLE (TWO HATS)
+
+
 You and other individuals have been captured by super-intelligent alien overlords. The aliens think humans look quite tasty, but their civilization forbids eating highly logical and cooperative beings. Unfortunately, they’re not sure whether you qualify, so they decide to give you all a test. 
 The aliens tell you the following: 
 
@@ -5,9 +8,18 @@ The aliens tell you the following:
 
 Can you think of a strategy guaranteed to save everyone? 
 
-The strategy to win this game and be freed by the aliens is to agree that whoever starts, says: 
 
-	Blue to indicate that he sees an odd number of red hats in front of him.
-   	Red to indicate that he sees an even number of red hats in front of him.
 
-He will proabably guess his hat wrong, but that's okay because it is allowed to commit one mistake.The other agents will deduce their hat colours based on the announcements made by the previous agents and the colour of the hats they see.
+RIDDLE 2: THE PRISONER AND HAT RIDDLE (THREE HATS)
+
+
+In this riddle you are playing to get as much money as possible! In this game, you and other people have to guess correctly the colour of your own hat. Compared to before, there are now three hats (blue, red or yellow). As expected, each contestant can see the colors of the hats of everyone in front of her but does not know the color of her own hat or that of anyone behind.
+
+During the game, you are lined up single-file. The host, starting from the back of the line, asks each contestant to state aloud the color of her hat. The contestants are not permitted to say anything other than a color (blue, red or yellow), and they can only speak once. (All of the contestants hear what each of the others says aloud.) The host then goes to the next contestant and repeats the question, continuing until all contestants have spoken. At the end, if there are x correct answers, a purse of x times $10,000 is distributed equally among all players. 
+
+What strategy maximizes the amount the contestants win? And what is the expected amount?
+
+
+
+When you give up, or if you just want to know whether you are correct or not, you can analyse one of the two riddles by using this programme. For a discussion of the strategy used in each riddle read our report! :)
+
