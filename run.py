@@ -8,6 +8,7 @@ import getopt
 import sys
 import numpy as np 
 import Agent
+import utility
 import Kripke
 import networkx as nx
 from itertools import product
@@ -15,41 +16,6 @@ import networkx as nx
 from networkx.drawing.nx_agraph import graphviz_layout, to_agraph
 import graphviz
 
-
-# randomly assign a hat colour to each agent
-def assignRandomHat(n):
-	agents = []  
-	hats = []
-	i = 1
-	while i < number_prisoners+1:
-		new_agent = Agent.Agent(i,1)
-		new_agent.hats_in_front = hats.copy()
-		hats.append(new_agent.colourHat)
-		agents.append(new_agent)
-		i += 1
-	print("The agents are distributed like this (from tallest to shortest):",list(reversed(hats)))
-	return agents,hats
-
-# let the user assign a hat colour for each agent		
-def assignHatUser(n):
-	agents = []
-	print("\nType the colours of the hats of the prisoners. \nPlease choose only \"red\" or \"blue\"")
-	hats = []
-	i = 1
-	while i < number_prisoners+1:
-		print("Agent", i, "has the following colour hat:")
-		colour = input("")
-		while (colour != "red" and colour != "blue"):
-			print("Please choose only \"red\" or \"blue\"")
-			print("Agent", i, "has the following colour hat:")
-			colour = input("")
-		new_agent = Agent.Agent(i,colour)
-		new_agent.hats_in_front = hats.copy()
-		hats.append(new_agent.colourHat) # add after so agents own hat is not added to list
-		agents.append(new_agent)
-		i += 1
-	print("The agents are distributed like this (from tallest to shortest):",list(reversed(hats)))
-	return agents,hats
 
 # counts the number of red hats and checks whether to ouput red or blue
 def countHats(agent,agents):
@@ -158,22 +124,6 @@ def checkRiddle(c,h):
 	
 # contains the dialogue with the user	   
 if __name__ == '__main__':
-	fullCmdArguments = sys.argv
-	# - further arguments
-	argumentList = fullCmdArguments[1:]
-	unixOptions = "12"  
-	gnuOptions = ["variation1", "variation2"]  
-	try:  
-		arguments, values = getopt.getopt(argumentList, unixOptions, gnuOptions)
-	except getopt.error as err:  
-		# output error, and return with an error code
-		print (str(err))
-		sys.exit(2)
-	for currentArgument, currentValue in arguments:  
-		if currentArgument in ("-1", "--variation1"):
-			print ("variation1")
-		elif currentArgument in ("-2", "--variation2"):
-			print ("variation2")
 	print("Welcome, I am a highly intelligent riddle solver and today I am challenging you to solve one of these two riddles (or both). Do you dare? Read the two riddle belows:")
 	with open('description.txt', 'r') as d:
 			print(d.read())
@@ -187,8 +137,8 @@ if __name__ == '__main__':
 	print("You chose riddle", riddleChoice)
 	while True:
 		number_prisoners = int(input("How many prisoners would you like? \n"))
-		if (number_prisoners<2):
-			print("Please input at least 2 agents")
+		if (number_prisoners<3):
+			print("Please input at least 3 agents")
 			continue
 		else:
 			break
@@ -200,10 +150,14 @@ if __name__ == '__main__':
 			continue
 		else:
 			break
-	if(hatChoice=='yes'):
-		a,h=assignHatUser(number_prisoners)
-	elif(hatChoice=='no'):
-		a,h=assignRandomHat(number_prisoners)
+	if(hatChoice=='yes' and riddleChoice == 1):
+		a,h=utility.assignHatUser(number_prisoners,['blue','red'])
+	elif(hatChoice=='yes' and riddleChoice == 2):
+		a,h=utility.assignHatUser(number_prisoners,['blue','red','yellow'])
+	elif(hatChoice=='no' and riddleChoice ==1):
+		a,h=utility.assignRandomHat(number_prisoners,['blue','red'])
+	elif(hatChoice=='no' and riddleChoice ==2):
+		a,h=utility.assignRandomHat(number_prisoners,['blue','red','yellow'])
 	else:
 		print("Please input either yes or no")   
 	m=createAgentKnowledge(a,number_prisoners,h)

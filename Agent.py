@@ -1,14 +1,10 @@
 import numpy as np 
-hatColour=['blue','red']
 
 class Agent:
 	
-	def __init__(self, size,randomColour):
+	def __init__(self, size,color):
 		self.size = size
-		if(randomColour==1):
-			self.colourHat= np.random.choice(hatColour)
-		else:
-			self.colourHat= randomColour
+		self.colourHat= color
 		self.hats_in_front = []
 		
         
