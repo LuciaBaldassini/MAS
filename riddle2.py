@@ -43,8 +43,16 @@ def announcementLoop(agents,model,n,hats):
 			print("Agent", agent.id, "announces:")
 			print('"', c, '"')
 			counter += 1
+	return commonKnowledge
 			
+def calculateTotalWin(hatColors,hats,n):
+	totalWin=0
+	for h in range(0,len(hats)):
+		if hatsCode[hats[h]] == hatColors[h]:
+			totalWin += 10000
+	print('Congratulations! You won in total',totalWin,'€!')
 
 def runRiddle2(a,number_prisoners,h):
 	m=utility.createAgentKnowledge(a,number_prisoners,h,['red','blue','yellow'])
-	announcementLoop(a,m,number_prisoners,h)
+	c=announcementLoop(a,m,number_prisoners,h)
+	calculateTotalWin(c,h,number_prisoners)
