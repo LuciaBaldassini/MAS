@@ -1,10 +1,8 @@
 import Agent
 import numpy as np
 from pygraphviz import *
-from pathlib import Path
-import os
-import Kripke
 from itertools import product
+from collections import defaultdict
 
 
 # randomly assign a hat colour to each agent
@@ -42,13 +40,21 @@ def assignHatUser(n,colorPossibility):
 	print("The agents are distributed like this (from tallest to shortest):",list(reversed(hats)))
 	return agents,hats
 
-# creates the knowledge of each agent at the beginning of the riddle (before any announcements)
+# creates the knowledge of each agent at the beginning of the riddle (before any announcements) and optionally prints it
 def createAgentKnowledge(agents,n,hats,colorChoices):
-	allWorlds=list(product(colorChoices,repeat = n)) # creates all possible worlds
-	kripke = Kripke.Kripke(agents,allWorlds,hats) # define a new Kripke model
-	model=kripke.createKripkeModel()
+	model = defaultdict(list)
+	allWorlds=list(product(colorChoices,repeat = n)) # creates all possible worlds by finding all possible combinations of red, blue (and yellow in the case of riddle 2)
+	for a in agents:
+		if (a.id == 1): # the shortest agent have access to all possible worlds
+			model[a.id] = allWorlds
+		else:
+			subArray = hats[:a.id - 1] # the worlds accessible for the other agents are those containing the color hats of the agents they see and all possible combinations of colors for the agents behind them (because they cannot see them)
+			for w in allWorlds:
+				worldSubset = w[-len(subArray):len(w)]
+				if (np.array_equal(list(reversed(subArray)), worldSubset)):
+					model[a.id].append(w)
 	while True:
-		kripkeChoice= str(input("Would you like to inspect the initial Kripke model? [yes/no] \n"))
+		kripkeChoice= str(input("Would you like to inspect the initial Kripke model (a nice graph will be saved in the same folder as this programme)? [yes/no] \n"))
 		if kripkeChoice != "yes" and kripkeChoice != "no":
 			print("Please enter either yes or no.")
 			continue

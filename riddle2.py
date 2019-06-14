@@ -6,6 +6,8 @@ hatsCode = {
 'red':2
 }
 
+INITIAL_NUMBER=30
+
 	
 def calculateCheckSum(agent,h):
 	checkSum=0
@@ -15,17 +17,34 @@ def calculateCheckSum(agent,h):
 			checkSum += hatsCode[hats] # calculate the checkSum of the hats in the row in front of each agent
 	return checkSum
 	
-def calculateHatColor(checkSum,commonKnowledge):
+def calculateHatColor(checkSum):
 	modulo=checkSum%3
 	if modulo in hatsCode.values():
 		guess = [key for key, value in hatsCode.items() if value == modulo]
-	
-		return guess # return the color associated with each modulo
+		return guess,modulo # return the color associated with each modulo
+
+def announcementLoop(agents,model,n,hats):
+	runningTally=INITIAL_NUMBER
+	commonKnowledge=[]
+	counter=0
+	for agent in reversed(agents):
+		if agent.id==n:
+			s=calculateCheckSum(agent,hats)
+			c,m=calculateHatColor(s)
+			commonKnowledge.append(m)
+			runningTally -= m  # subtract the modulo from the runningTally
+			print("Agent", agent.id, "announces:")
+			print('"',c, '"')
+		else:
+			runningTally -= commonKnowledge[counter] # subtract previousely called color from running tally
+			s=calculateCheckSum(agent,hats)
+			c,m=calculateHatColor(runningTally-s)
+			commonKnowledge.append(m)
+			print("Agent", agent.id, "announces:")
+			print('"', c, '"')
+			counter += 1
+			
 
 def runRiddle2(a,number_prisoners,h):
-	commonKnowledge=[]
 	m=utility.createAgentKnowledge(a,number_prisoners,h,['red','blue','yellow'])
-	for agent in reversed(a):
-		s=calculateCheckSum(agent,h)
-		#c=calculateHatColor(s,commonKnowledge)
-		#commonKnowledge.append(c)
+	announcementLoop(a,m,number_prisoners,h)
