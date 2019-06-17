@@ -164,5 +164,32 @@ Because <span style="color:#00FF00">Agent 1</span> knows that there is an even n
 
 # Further implementation
 
-The system could be expanded to solve riddles similar to the Prisoner and Hat riddle.
+An addition made to the system is the scenario where there are 10 hats (actually, the number of hats is irrelevant but it was specified as such), with 3 colours (<span style="color:red">red</span>, <span style="color:blue">blue</span> and <span style="color:yellow">yellow</span>) and a bug in the room. In this scenario, our first strategy will not work as specifying whether there is an odd or an even number of red hats will not guarentee that any of the agents will guess their colour correctly. To add to the difficulty, a bug is added to the room where the prisoners can discuss strategy, such that if they all agree to say red such that one third of them will probably guess correctly, the captors can give none of the prisoners red hats. 
 
+The winning strategy is called the "checksum modulo-3" method. The prisoners agree on different numbers to represent each colour har, for example: <span style="color:yellow">yellow</span> = 0, <span style="color:blue">blue</span> = 1 and <span style="color:red">red</span> = 2. Using these numbers, the tallest agents adds up the numbers of the colour he or she sees and performs a modulo of 3 on the sum, therefore obtaining either number 0, 1 or 2 and he or she will then utter the corresponding colour. In order to avoid negative numbers, all agents start with the number 30 and add the number corresponding to the colour uttered by the tallest agent to what is called the "running tally". The next agent also calculates the sum of the hats in front of him or her, and subtracts this number from the running tally and then performs a modulo of 3, such that they end up with their own colour hat. The next agents again subtract this number from the current running tally such that when it is their turn, they all correctly call out the colour of their hat. 
+
+As this method is hard to imagine, we will provide a short example of three agents, such that we can also visualize the Kripke model. In this new scenario, <span style="color:#007FFF">Agent 3</span> is wearing a <span style="color:yellow">yellow</span> hat, <span style="color:#FF8000">Agent 2</span> is wearing a <span style="color:red">red</span> hat and <span style="color:#00FF00">Agent 1</span> is wearing a <span style="color:blue">blue</span> hat. 
+
+```{r prisoners, echo=FALSE, out.width = '100%', fig.align='center'}
+knitr::include_graphics("pictures/Prisoners_yrb.png")
+```
+
+Initially, we could draw the following Kripke model: <span style="color:#007FFF">Agent 3</span> is unsure of only the colour of his own hat. The knowledge of <span style="color:#FF8000">Agent 2</span> contains worlds in which both his and  <span style="color:#007FFF">Agent 3</span>'s hat colour vary. The knowledge of <span style="color:#00FF00">Agent 1</span> contains all possible combinations of <span style="color:yellow">yellow</span>, <span style="color:blue">blue</span> and <span style="color:red">red</span>. 
+
+```{r model no relations, echo=FALSE, out.width = '100%', fig.align='center'}
+knitr::include_graphics("pictures/hats_yrb_agent3,2,1.png")
+```
+
+In this scenario, <span style="color:#007FFF">Agent 3</span> can see one <span style="color:red">red</span> hat (=2) and one <span style="color:blue">blue</span> hat (=1), he calculates the sum (2+1=3) and performs a modulo (3%3=0), he ends up with 0 which represents <span style="color:yellow">yellow</span>, he therefore calls out "<span style="color:yellow">yellow</span>". 
+
+<span style="color:#FF8000">Agent 2</span> adds this number (0) to the previously mentioned 30, resulting in 30. He sees a <span style="color:blue">blue</span> hat and therefore subtracts the corresponding number from the running tally (30-1=29) and performs a modulo 3 (29%3=2), he ends up with 2 which represents <span style="color:red">red</span>, he therefore says "span style="color:red">red</span>" which is correct. Before the utterance of <span style="color:#FF8000">Agent 2</span>, <span style="color:#00FF00">Agent 1</span> actually could not update its Kripke model, therefore after the first utterance by <span style="color:#007FFF">Agent 3</span> the Kripkse model is updated to:
+
+```{r model after 3, echo=FALSE, out.width = '100%', fig.align='center'}
+knitr::include_graphics("pictures/hats_yrb_after3.png")
+```
+
+<span style="color:#00FF00">Agent 1</span> also updated its running tally after the call by <span style="color:#007FFF">Agent 3</span>, which is 30 at this point. After the utterance of <span style="color:#FF8000">Agent 2</span> this updates to (30-2=28) and he or she then performs a modulo (28%3=1) to conclude that he or she is wearing a <span style="color:blue">blue</span> hat. This results in the final Kripke model:
+ 
+```{r model after 3, echo=FALSE, out.width = '100%', fig.align='center'}
+knitr::include_graphics("pictures/hats_yrb_after3,2.png")
+```
