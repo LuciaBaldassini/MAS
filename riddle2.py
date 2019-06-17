@@ -44,6 +44,7 @@ def announcementLoop(agents,model,n,hats):
 			print('"', c, '"')
 			counter += 1
 	return commonKnowledge
+
 			
 def calculateTotalWin(hatColors,hats,n):
 	totalWin=0

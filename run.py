@@ -22,6 +22,15 @@ if __name__ == '__main__':
 		else:
 			break
 	print("You chose riddle", riddleChoice)
+	if(riddleChoice ==1):
+		while True:
+			riddleStrategy = int(input("Which strategy you want to use? [1 or 2]"))
+			if riddleChoice != 1 and riddleChoice != 2:
+				print("Please choose either 1 or 2")
+				continue
+			else:
+				break
+		print("You chose strategy", riddleStrategy)
 	while True:
 		number_prisoners = int(input("How many prisoners would you like? \n"))
 		if number_prisoners<3:
@@ -49,7 +58,7 @@ if __name__ == '__main__':
 		print("Please input either yes or no")
 	
 	if  riddleChoice==1 :
-		riddle1.runRiddle1(a,number_prisoners,h)
+		riddle1.runRiddle1(a,number_prisoners,h,riddleStrategy)
 	elif riddleChoice==2 :
 		riddle2.runRiddle2(a,number_prisoners,h)
     
