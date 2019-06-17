@@ -190,6 +190,7 @@ knitr::include_graphics("pictures/hats_yrb_after3.png")
 
 <span style="color:#00FF00">Agent 1</span> also updated its running tally after the call by <span style="color:#007FFF">Agent 3</span>, which is 30 at this point. After the utterance of <span style="color:#FF8000">Agent 2</span> this updates to (30-2=28) and he or she then performs a modulo (28%3=1) to conclude that he or she is wearing a <span style="color:blue">blue</span> hat. This results in the final Kripke model:
  
+
 ```{r, echo=FALSE, out.width = '100%', fig.align='center'}
 knitr::include_graphics("pictures/hats_yrb_after3,2.png")
 ```
