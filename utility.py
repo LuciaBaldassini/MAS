@@ -76,7 +76,15 @@ def printGraph(m,h,counter,riddleNumber):
 	realWorld.reverse()
 	g.add_node(tuple(realWorld),style='filled',fillcolor='green')	# add the current world, in green
 	for key,value in m.items():
+		l = printEdgeLabel(m,key)
 		for w in range(0,len(value)):
-			g.add_edge(tuple(realWorld),value[w],label=key,dir='both') # add an edge for each accessibility relations, nodes are created automatically. Each edge is labelled with the agent number
+			g.add_edge(tuple(realWorld),value[w],label=l,dir='both') # add an edge for each accessibility relations, nodes are created automatically. Each edge is labelled with the agent number
 	#os.chdir(str(path))
 	g.draw(filename,prog='dot') # print it to file
+
+def printEdgeLabel(m,k):
+	label=[]
+	for key in m.keys():
+		if key<=k:
+			label.append(key)
+	return label

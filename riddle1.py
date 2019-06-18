@@ -27,7 +27,7 @@ def announcementLoopStrategy2(agents,model,n,hats):
 		else:  #say RED if someone makes a guess, BLUE if all the gnomes who declared before him passed and he sees nothing but RED hats in front of him, and PASS otherwise.
 			color=deduceHatColour(agent,model,counter)
 			print("Agent", agent.id, "announces:")
-			print('"', color, '"')
+			print(color)
 			commonKnowledge.append(color)
 			updateKripkeStrategy2(model,commonKnowledge, agent, counter,n)
 		counter += 1
@@ -89,7 +89,7 @@ def announcementLoop(agents,model,n,hats):
 		else:
 			color=deduceHatColour(agent,model,counter)
 			print("Agent",agent.id,"announces:")
-			print('"',color,'"')
+			print(color)
 			commonKnowledge.append(color)
 			updateKripke(model,agent,commonKnowledge,counter)
 		counter +=1
