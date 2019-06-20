@@ -93,17 +93,18 @@ def announcementLoop(agents,model,n,hats):
 			commonKnowledge.append(color)
 			updateKripke(model,agent,commonKnowledge,counter)
 		counter +=1
-		while True:
-			updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model? [yes/no] \n"))
-			if (updatedkripkeChoice != "yes" and updatedkripkeChoice != "no"):
-				print("Please enter either yes or no.")
-				continue
-			else:
-				break
-		if(updatedkripkeChoice=="yes"):
-			print("The Kripke model after announcement",counter,"is:")
-			print(dict(model))
-			utility.printGraph(model,hats,counter,1)
+		if agent.id!=1:
+			while True:
+				updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model? [yes/no] \n"))
+				if (updatedkripkeChoice != "yes" and updatedkripkeChoice != "no"):
+					print("Please enter either yes or no.")
+					continue
+				else:
+					break
+			if(updatedkripkeChoice=="yes"):
+				print("The Kripke model after announcement",counter,"is:")
+				print(dict(model))
+				utility.printGraph(model,hats,counter,1)
 	return commonKnowledge
 
 
