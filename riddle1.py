@@ -21,7 +21,7 @@ def announcementLoopStrategy2(agents,model,n,hats):
 				print('blue')
 				commonKnowledge.append('blue')
 			else:
-				print('Pass')
+				print('pass')
 				commonKnowledge.append('pass')
 			updateKripkeStrategy2(model,commonKnowledge,agent,counter,n)
 		else:  #say RED if someone makes a guess, BLUE if all the gnomes who declared before him passed and he sees nothing but RED hats in front of him, and PASS otherwise.
@@ -44,7 +44,6 @@ def announcementLoopStrategy2(agents,model,n,hats):
 	return commonKnowledge
 
 def updateKripkeStrategy2(m,commonKnowledge,a,counter,n):
-	print(commonKnowledge)
 	for agent,worlds in m.items():
 		if agent<a.id:
 			toRemove=[]
@@ -167,15 +166,16 @@ def checkRiddle(c,h,strategy):
 			print("Gnam gnam you all will be our dinner!!")
 	else: # check riddle strategy 2
 		mistake=0
-		for element1 in range(0, c):
-			for element2 in range(0, h):
-				if c[element1] != h[element2] and c[element1]!= 'pass':
-					mistake=1
-					break
-				else:
-					continue
+		counter = 0
+		while counter < len(c)-1:
+			if c[counter] != h[counter] and c[counter]!= 'pass':
+				mistake=1
 				break
-		if mistake == 1:
+			else:
+				counter += 1
+				continue
+			break
+		if mistake == 0:
 			print("You are intelligent enough, you will be spared!")
 		else:
 			print("Gnam gnam you all will be our dinner!!")
@@ -190,4 +190,4 @@ def runRiddle1(a,number_prisoners,h,strategy):
 		checkRiddle(c,h,1)
 	else:
 		c=announcementLoopStrategy2(a,m,number_prisoners,h) # go in the announcement loop
-	
+		checkRiddle(c, h, 2)
