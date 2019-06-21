@@ -31,17 +31,16 @@ def announcementLoopStrategy2(agents,model,n,hats):
 			commonKnowledge.append(color)
 			updateKripkeStrategy2(model,commonKnowledge, agent, counter,n)
 		counter += 1
-		while True:
-			updatedkripkeChoice = str(input("Would you like to inspect the updated Kripke model? [yes/no] \n"))
-			if (updatedkripkeChoice != "yes" and updatedkripkeChoice != "no"):
-				print("Please enter either yes or no.")
-				continue
-			else:
-				break
-		if (updatedkripkeChoice == "yes"):
-			print("The Kripke model after announcement", counter, "is:")
-			print(dict(model))
-			utility.printGraph(model, hats, counter, 1)
+		if agent.id!=1:
+			while True:
+				updatedkripkeChoice = str(input("Would you like to inspect the updated Kripke model (a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
+				if (updatedkripkeChoice != "yes" and updatedkripkeChoice != "no"):
+					print("Please enter either yes or no.")
+					continue
+				else:
+					break
+			if (updatedkripkeChoice == "yes"):
+				utility.printGraph(model, hats, counter, 1)
 	return commonKnowledge
 
 def updateKripkeStrategy2(m,commonKnowledge,a,counter,n):
@@ -56,15 +55,19 @@ def updateKripkeStrategy2(m,commonKnowledge,a,counter,n):
 						if 'blue' in worldSubset == True: #remove all worlds that contain a blue hat
 							toRemove.append(w)
 					else: # case in which agent 1 passed
-						if worldSubset.count('blue') == n - 1:  # remove the worlds that contains all blue hats
+						if worldSubset.count('red') == n - 1:  # remove the worlds that contains all red hats
 							toRemove.append(w)
-				else:
-					if 'blue' in commonKnowledge or 'red' in commonKnowledge: #say red if someone makes a guess
+				else: # from second agent onwards
+					if 'blue' in commonKnowledge or 'red' in commonKnowledge: #say RED if someone made a guess
 						if worldSubset[counter] == 'blue':
 							toRemove.append(w)
-					elif commonKnowledge.count('pass') == len(commonKnowledge) and worldSubset.count('red')== len(worldSubset): #BLUE if all the gnomes who declared before him passed and he sees nothing but RED hats in front of him
-						if worldSubset[counter]=='red':
-							toRemove.append(w)
+					elif commonKnowledge.count('pass') == len(commonKnowledge): # say BLUE if all the gnomes who declared before him passed
+						if a.id!=1 and worldSubset.count('red') == len(worldSubset): # he sees nothing but RED hats in front of him: this holds for all agents except agent 1:
+							if worldSubset[counter]=='red':
+								toRemove.append(w)
+						else: # agent 1
+							if worldSubset[counter]=='red':
+								toRemove.append(w)
 			for i in toRemove: # remove the list of worlds from the dictionary
 				m[agent].remove(i)
 
@@ -95,15 +98,13 @@ def announcementLoop(agents,model,n,hats):
 		counter +=1
 		if agent.id!=1:
 			while True:
-				updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model? [yes/no] \n"))
+				updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model (a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
 				if (updatedkripkeChoice != "yes" and updatedkripkeChoice != "no"):
 					print("Please enter either yes or no.")
 					continue
 				else:
 					break
 			if(updatedkripkeChoice=="yes"):
-				print("The Kripke model after announcement",counter,"is:")
-				print(dict(model))
 				utility.printGraph(model,hats,counter,1)
 	return commonKnowledge
 
@@ -114,9 +115,9 @@ def updateKripke(m,a,commonKnowledge, counter):
 		if agent<a.id: #only update the knowledge of the agents in front of the agent that just spoke
 			toRemove=[]
 			for w in worlds:
-				worldSubset=w[1:len(w)] # remove the hat of the tallest player, this is not important
+				worldSubset=w[1:len(w)]# remove the hat of the tallest player, this is not important
 				if counter == 0: # the first common knowledge is the number of even and odd hats
-					if commonKnowledge[counter]=='red': # even number
+					if commonKnowledge[0]=='red': # even number
 						if worldSubset.count('red') %2 != 0: # remove subworlds with an odd number of red hats
 							toRemove.append(w)
 					else: # odd number
@@ -125,41 +126,68 @@ def updateKripke(m,a,commonKnowledge, counter):
 				else:
 					if worldSubset[counter-1]!=commonKnowledge[counter]:
 						toRemove.append(w)
+					if commonKnowledge[0]=='red' and w not in toRemove: # even number
+						if worldSubset.count('red') %2 != 0: # remove subworlds with an odd number of red hats
+							toRemove.append(w)
+					elif commonKnowledge[0]=='blue' and w not in toRemove: # odd number
+						if worldSubset.count('red') %2 == 0: # remove subworlds with an even number of red hats
+							m[agent].remove(w)
 			for i in toRemove: # remove the list of worlds from the dictionary
 				m[agent].remove(i)
 				
 # deduces the hat colour of an agent
 def deduceHatColour(a,m,counter):
 	worlds=m[a.id] # copy the worlds of a given agent
-	knowsHat=0
+	knowsHat=1
+	#print(dict(m))
 	for w in range(0,len(worlds)):
 		for nextWorld in range(1,len(worlds)):
-			if worlds[w][counter]==worlds[nextWorld][counter] : # compare if the element in the position of the agent is the same for all worlds
-				color=worlds[w][counter]
-				knowsHat=1
+			if worlds[w][counter]!=worlds[nextWorld][counter] : # compare if the element in the position of the agent is the same for all worlds
+				knowsHat=0
+				break
+			else:
+				continue
+			break
+
 	if knowsHat == 1:
-		return color
+		return worlds[w][counter]
 	else:
 		return 'pass'
 
 # check if at most one mistake has been commited
-def checkRiddle(c,h):
+def checkRiddle(c,h,strategy):
 	h.reverse()
-	numberOfMistakes=np.sum(c != h) # count number of dissimilar item
-	if numberOfMistakes == 0 :
-		print("Wow you are a highly intelligence specie, you will not be eaten!")
-	elif numberOfMistakes == 1 :
-		print("You are lucky, you made only one mistake so you will not be eaten!")
-	else:
-		print("Gnam gnam you all will be our dinner!!")
+	if strategy==1:
+		numberOfMistakes=np.sum(c != h) # count number of dissimilar item
+		if numberOfMistakes == 0 :
+			print("Wow you are a highly intelligence specie, you will not be eaten!")
+		elif numberOfMistakes == 1 :
+			print("You are lucky, you made only one mistake so you will not be eaten!")
+		else:
+			print("Gnam gnam you all will be our dinner!!")
+	else: # check riddle strategy 2
+		mistake=0
+		for element1 in range(0, c):
+			for element2 in range(0, h):
+				if c[element1] != h[element2] and c[element1]!= 'pass':
+					mistake=1
+					break
+				else:
+					continue
+				break
+		if mistake == 1:
+			print("You are intelligent enough, you will be spared!")
+		else:
+			print("Gnam gnam you all will be our dinner!!")
 
 
-# runs Riddle 1		
+
+# runs Riddle 1 with either strategy 1 or 2
 def runRiddle1(a,number_prisoners,h,strategy):
 	m=utility.createAgentKnowledge(a,number_prisoners,h,['blue','red']) # creates the initial kripke model
 	if(strategy==1):
 		c=announcementLoop(a,m,number_prisoners,h) # go in the announcement loop
-		checkRiddle(c,h)
+		checkRiddle(c,h,1)
 	else:
 		c=announcementLoopStrategy2(a,m,number_prisoners,h) # go in the announcement loop
 	

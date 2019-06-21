@@ -1,6 +1,7 @@
 import Agent
 import numpy as np
 from pygraphviz import *
+import graphviz
 from itertools import product
 from collections import defaultdict
 
@@ -54,15 +55,13 @@ def createAgentKnowledge(agents,n,hats,colorChoices):
 				if (np.array_equal(list(reversed(subArray)), worldSubset)):
 					model[a.id].append(w)
 	while True:
-		kripkeChoice= str(input("Would you like to inspect the initial Kripke model (a nice graph will be saved in the same folder as this programme)? [yes/no] \n"))
+		kripkeChoice= str(input("Would you like to inspect the initial Kripke model (a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
 		if kripkeChoice != "yes" and kripkeChoice != "no":
 			print("Please enter either yes or no.")
 			continue
 		else:
 			break
 	if kripkeChoice=="yes":
-		print("The Kripke model before any announcement is made is:")
-		print(dict(model))
 		printGraph(model,hats,0,1)
 	return model
 	

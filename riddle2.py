@@ -46,15 +46,13 @@ def announcementLoop(agents,model,n,hats):
 		counter += 1
 		if agent.id!=1:
 			while True:
-				updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model? [yes/no] \n"))
+				updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model (a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
 				if (updatedkripkeChoice != "yes" and updatedkripkeChoice != "no"):
 					print("Please enter either yes or no.")
 					continue
 				else:
 					break
 			if(updatedkripkeChoice=="yes"):
-				print("The Kripke model after announcement",counter,"is:")
-				print(dict(model))
 				utility.printGraph(model,hats,counter,2)
 	return commonKnowledge
 
@@ -75,7 +73,6 @@ def updateKripkeModel(m,a,hats, runningTally,previousAnnouncement,counter):
 			
 def calculateTotalWin(hatColors,hats):
 	totalWin=0
-	print(hats)
 	hatColors.reverse()
 	for h in range(0,len(hats)):
 		if hatsCode[hats[h]] == hatColors[h]:
