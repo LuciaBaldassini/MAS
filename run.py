@@ -23,6 +23,8 @@ if __name__ == '__main__':
 			break
 	print("You chose riddle", riddleChoice)
 	if(riddleChoice ==1):
+		with open('strategyRiddle1.txt', 'r') as d:
+			print(d.read())
 		while True:
 			riddleStrategy = int(input("Which strategy you want to use? [1 or 2]"))
 			if riddleChoice != 1 and riddleChoice != 2:
@@ -31,6 +33,9 @@ if __name__ == '__main__':
 			else:
 				break
 		print("You chose strategy", riddleStrategy)
+	if riddleChoice == 2:
+		with open('strategyRiddle2.txt', 'r') as d:
+			print(d.read())
 	while True:
 		number_prisoners = int(input("How many prisoners would you like? \n"))
 		if number_prisoners<3:
