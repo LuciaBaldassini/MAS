@@ -11,18 +11,23 @@ author:
 - Julia Mol   
 output: rmdformats::material
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
 
-# Description of the riddle
+# Introduction
+
+For our projects we were interested in analysing riddles involving agents wearing different hats color. In this type of riddles, agents wear a hat, usually assigned randomly, and have to guess their hat color. These riddles are perfect for applying Kripke models and Public Annnouncement Logic. After each agent makes an announcement, the accessible worlds of the following agents are reduced so that agents become sure about their hat because in all worlds accessible to them they all wear the same color. 
+In our porject we analysed two riddles, which will be briefly explained below. For one of the two riddles, two strategies are implemented. 
+
+The 'Strategy' section shows the strategies used to solve both riddles. In the 'Analysis' section we provide, for each riddle and each strategy, a practical example in which Kripke models and Public Announcement Logic is directly applied. The 'Implementation' section provides a description of how the strategies where implemented in the programme. Lastly, in the 'Conclusion and further improvements' we provide a brief discussion of the project and possibilities for further improvements.
+
+## Description riddle 1
 
 
-<font face="apple chancery" color="olive"><center><i>You and other individuals have been captured by super-intelligent aliens! The aliens think agents look quite tasty, but - luckily for you - their civilization forbids eating highly logical and cooperative beings. Since the aliens are not sure whether you qualify, they decide to give you all a test to figure that out. 
-The aliens tell you the following:</i> </center></font>
+You and other individuals have been captured by super-intelligent aliens! The aliens think agents look quite tasty, but - luckily for you - their civilization forbids eating highly logical and cooperative beings. Since the aliens are not sure whether you qualify, they decide to give you all a test to figure that out. The aliens tell you the following:
 
 
 <p><center> "You will be placed in a line, facing forward and ordered from <i>tallest</i> to <i>shortest</i>. You will not be able to look behind you or step out of the line. <br>
@@ -30,11 +35,20 @@ Each of you will have either a <span style="color:blue">blue</span> or a <span s
 Know that we notice everything! So, do not even think of saying other words than <span style="color:blue">blue</span> or <span style="color: red">red</span> or signal something with intonation, for instance. <br><i><b>Else, you will all be eaten immediately! </b></i> 
 <br>For you to stay spared, you are allowed to make up to one mistake at most. You are given a couple of minutes to discuss a strategy before we start."</center></p>
 
+##  Description riddle 1: variation
 
-<!--<font color="olive"><center><i>Can you think of a strategy guaranteed to save everyone?</i> </center></font>
--->
+TO DO 
 
-# Strategy
+## Description riddle 2
+
+You and other individuals are part of a tv show in which you can win a lot of money! The host of the show tells you the following:
+
+<p><center> "You will be placed in a line, facing forward and ordered from <i>tallest</i> to <i>shortest</i>. You will not be able to look behind you or step out of the line. <br>
+Each of you will have either a <span style="color:red">red</span>, a <span style="color:blue">blue</span> or a <span style="color:yellow">yellow</span> hat (assigned randomly). When the game begins, each of you must guess the colour of their own hat, starting from the person in the back and moving down the line. Your final prize will be determined by the amount of correct guesses you make. You get 10.000$ for each correct guess! You have 5 minutes to come up with a solution."</center></p>
+ 
+# Strategies
+
+## Riddle 1: first strategy
 
 The strategy to win this game and, hence, be freed by the aliens is to agree that the tallest agent says:
 <ul>
@@ -46,28 +60,20 @@ The tallest agents does not hear any information from another agent before he ha
 
 The game's goal is to have as many of the agents correctly guess their hat colour. The game is successfully played if at most one mistake is made. Therefore, since only the tallest agent is unsure of his answer, the game is always played successfully if the above-mentioned technique is applied.
 
-<!--When the first agent has answered, the common knowledge of the others gets immediately adjusted. The number of possible worlds decrements when the previous agent(s) has indicated whether he sees an odd or even number of blue hats in front of him. Combining previous answers with an agent's current..  
--->
+## Riddle 1: second strategy
+In the variation of riddle 1 we need to apply a different strategy compared to the one explained before. 
 
-# Implementation
+TO DO
 
-To solve the riddle, we built a system that runs from the command line. At the start, the system asks the user whether (s)he would like to read the description of the riddle or not. If so, a brief explanation of the riddle is viewed on the interface to inform the user. Furthermore, the user has the opportunity to decide the number of agents (at least two) and the manually assign the different hat colours to each of the agents. However, the option to let the system assign this randomly can also be chosen. An overview of the distribution of <span style="color:red">red</span> and <span style="color:blue">blue</span> hats among the agents is displayed .
+## Riddle 2
 
-Each agent is created from a class ```Agent()```, which stores the agent number (i.e. the shortest agent is agent number 1, which increases up to the tallest agent), colour of the hat and number of hats in front of the agent. The main programme contains the dialogues with the user and several functions. The functions ```assignRandomHat``` and ```assignUserHat``` assign a random hat colour and the colour, chosen by the user, to the agent, respectively. When the hats are assigned, the programme displays how the colours are distributed among the agents.
+In this scenario, applying for example the first strategy of riddle 1 will not help, since specifying whether there is an odd or even number of red hats will not guarentee that any of the agents guesses their hat colour correctly. To add to the difficulty, a bug is added to the room in which the prisoners discuss their strategy together. For instance, if the prisoners agree on the strategy to all answer with the word <span style="color:red">red</span> (entailing that probably one third of them will have guessed correctly), the captors can sabotage them (e.g. giving none of the prisoners a red hat, so everyone guesses incorrectly).
 
-The kripke model is created from a class ```Kripke()```, which stores the agents and the various possible worlds. This class consists of a method called ```createKripkeModel``` that creates the initial Kripke model (i.e. the knowledge accessible to the agents before any announcement is made) in the form of a dictionary. Each agent represents a dictionary key and the values of each key are the worlds that are accessible for the agent before any announcement is made. The function considers all possible worlds, created with the ```itertools``` package, and the hat distribution chosen (stored in ```hats```). For each agent, ```hats``` is sliced so that it contains only the hats that each agent sees. Array slicing is an operation used to extract elements from an array and package them into another array. Also for each world ```w```, ```hats``` is sliced, so the array only contains the hats that are in front of the agent. Next, the two subarrays get compared. If these appear to be identical, they are added to the agent's list of accessible worlds. Hence, only the worlds representing what the agent sees are added. 
-
-Next, the system enters the ```announcementLoop()``` in which each agent makes an announcement. After each announcement, the system stores all previous announcements into an array called ```commonKnowledge```. This array will be used later again to update the Kripke model. After the first announcement has been made, the knowledge of all the agents (except of the tallest one) is updated by eliminating either all the worlds containing an even number of red hats (if the tallest agent said <span style="color: blue">'blue'</span>) or an odd number of red hats (if the tallest agent said <span style="color: red">'red'</span>). After the knowledge is updated, the next agent in line deduces the colour of his hat. This is done in the ```deduceHatColour```. Here an agent checks if his hat colour is the same in all updated worlds. If this is the case, he announces it. The new announcement gets added to the common knowledge array accordingly. In the next iteration, the following agent in line (i.e. the third agent) will eliminate all the worlds, in which the second agent does not wear the hat with the colour announced previously, from his current knowledge. This process of eliminating worlds continues for all subsequent agents until all agent have made an announcement. 
-During the announcement loop, the user has the option to view the updated Kripke model or not. 
-
-When the announcement loop terminates, a function called ```checkRiddle()``` checks if at most one mistake has been made. This is done by comparing the ```commonKnowledge``` with the hat distribution input at the very beginning of the riddle. The comparison is done with ```numpy.sum```, which outputs the number of dissimilar items of two arrays. If the correct strategy had been implemented, this comparison should never output more than one unidentical item.
-
-In the end, the system outputs a friendly message such as: ""Wow you are a highly intelligence specie, you will not be eaten!". 
-
-A programme that solves this riddle can be found [here](https://github.com/LuciaBaldassini/MAS).
+The winning strategy is called the "checksum modulo-3" method. The prisoners agree on different numbers to represent each hat colour. For example: <span style="color:yellow">yellow</span> = 0, <span style="color:blue">blue</span> = 1 and <span style="color:red">red</span> = 2. Using these numbers, the  agents add up the numbers of the colours they see and perform a modulo (%) of 3 on the sum. Hence, obtaining either number 0, 1 or 2 and the corresponding colour will be the word he utters. In order to avoid negative numbers, all agents start with the number 30 and add the number, corresponding to the colour uttered by the taller agent(s), to what is called the "running tally". The next agent also calculates the sum of the hats in front of him, subtracts this number from the running tally and then performs a modulo of 3, such that they end up with their own hat colour number. The following agents again subtract this number from the current running tally such that when it is their turn, they all correctly call out the colour of their hat. 
 
 # Analysis
 
+## Riddle 1: strategy 1
 Depending on the number of agents and the hat colours assigned to each of them, there are multiple different scenarios possible. 
 As an example, we will elaborate on the possible worlds in which three agents are participating in total. Each of the agents is either wearing a <span style="color: red">red</span> or <span style="color:blue">blue</span> hat. The following table indicates the 8 different scenarios that are possible in this situation. The arrows visualize the direction in which the particular agent is looking. T he colour of the cell represents the agent's hat colour. 
 
@@ -161,17 +167,15 @@ knitr::include_graphics("pictures/hats_rbb_after3,2.png")
 
 Because <span style="color:#00FF00">Agent 1</span> knows that there is an even number of <span style="color:red">red</span> hats (from the first announcement) and that <span style="color:#FF8000">Agent 2</span> is wearing a <span style="color:blue">blue</span> hat (from the second announcement), he concludes that in the real world there are 0 <span style="color:red">red</span> hats and he announces that the colour of his own hat is <span style="color:blue">blue</span>, solving the riddle.  
 
-</div>
 
-# Further implementation
+## Riddle 1: strategy 2 
 
-An addition made to the system is the scenario in which there are 10 hats, with 3 colours (<span style="color:red">red</span>, <span style="color:blue">blue</span> and <span style="color:yellow">yellow</span>) and a bug in the room. The actual total number of hats is irrelevant, but it was specified as such. 
+TO DO 
 
-In this scenario, our first strategy will not be able to solve the riddle, since specifying whether there is an odd or even number of red hats will not guarentee that any of the agents guesses their hat colour correctly. To add to the difficulty, a bug is added to the room in which the prisoners discuss their strategy together. For instance, if the prisoners agree on the strategy to all answer with the word <span style="color:red">red</span> (entailing that probably one third of them will have guessed correctly), the captors can sabotage them (e.g. giving none of the prisoners a red hat, so everyone guesses incorrectly).
+## Riddle 2
 
-The winning strategy is called the "checksum modulo-3" method. The prisoners agree on different numbers to represent each hat colour. For example: <span style="color:yellow">yellow</span> = 0, <span style="color:blue">blue</span> = 1 and <span style="color:red">red</span> = 2. Using these numbers, the  agents add up the numbers of the colours they see and perform a modulo (%) of 3 on the sum. Hence, obtaining either number 0, 1 or 2 and the corresponding colour will be the word he utters. In order to avoid negative numbers, all agents start with the number 30 and add the number, corresponding to the colour uttered by the taller agent(s), to what is called the "running tally". The next agent also calculates the sum of the hats in front of him, subtracts this number from the running tally and then performs a modulo of 3, such that they end up with their own hat colour number. The following agents again subtract this number from the current running tally such that when it is their turn, they all correctly call out the colour of their hat. 
 
-As this method might be hard to imagine, we will provide a brief example of three agents, such that we can also visualize the Kripke model. In this new scenario, <span style="color:#007FFF">Agent 3</span> is wearing a <span style="color:yellow">yellow</span> hat, <span style="color:#FF8000">Agent 2</span> is wearing a <span style="color:red">red</span> hat and <span style="color:#00FF00">Agent 1</span> is wearing a <span style="color:blue">blue</span> hat. 
+As the "checksum modulo-3" method might be hard to imagine, we will provide a brief example of three agents, such that we can also visualize the Kripke model. In this new scenario, <span style="color:#007FFF">Agent 3</span> is wearing a <span style="color:yellow">yellow</span> hat, <span style="color:#FF8000">Agent 2</span> is wearing a <span style="color:red">red</span> hat and <span style="color:#00FF00">Agent 1</span> is wearing a <span style="color:blue">blue</span> hat. 
 
 ```{r, echo=FALSE, out.width = '100%', fig.align='center'}
 knitr::include_graphics("pictures/Prisoners_yrb.png")
@@ -197,3 +201,48 @@ knitr::include_graphics("pictures/hats_yrb_after3.png")
 ```{r, echo=FALSE, out.width = '100%', fig.align='center'}
 knitr::include_graphics("pictures/hats_yrb_after3,2.png")
 ```
+
+# Implementation
+
+The programme that solves this riddle can be found [here](https://github.com/LuciaBaldassini/MAS). 
+
+The programme is written in ```Python3``` and requires the packages ```numpy``` and ```pygraphviz```. The programme contains the following files: ```run.py``` which is used to run the programme, ```riddle1.py```and ```riddle2``` which contain the functions that implement riddle 1 and riddle 2 respecively, ```Agent.py``` which contains the agent class and ```utiliy.py``` which contains the functions common to both riddles. 
+
+When the user runs the programme, a description of both riddle 1 and riddle 2 is shown. The system then asks which riddle the user wants to choose. Regardless of which riddle is chosen, a description of the implemented strategies is shown to the user. If riddle 1 is selected, the user has the option to solve it with two different strategies. 
+In both riddles, the user selects the amount of agents, although a minimum of three agents is required. This is because riddle 2 requires at least three agents and riddle 1 becomes too trivial if less than three agents are used. Although there is no maximum, we advice the user to choose at most 10 agents to prevent the system from becoming too slow. Each agent is created from the class ```Agent()```, which stores the agent id (the shortest agent is agent number 1, and the id increases up to the tallest agent), the colour of his/her hat and the color of the hats in front of him/her.
+
+The user has also the opportunity to either manually assign the hat colours of each agent or assign the color randomly (this is automatically done by the system with the function ```assignRandomHat```).  An overview of the distribution of the hats among the agents is then displayed.
+
+## Riddle 1: strategy 1
+
+First the initial Kripke model is created which contains all the worlds accessible by each agent **before** any announcement is made. This is done with the function ```createAgentKnowledge```. The model is in the form of a python dictionary in which the keys contain t he agent id and the values contain the accessbile worlds. The shortest agent is the one with the highest number of accessible worlds: The worlds accessible for him/her are all combinations of blue and red of length *n*, where *n* represents the number of agents in the riddle. For the other agents, the accessible worlds are those containing the hat color of the agents they see and all possible combinations of colors for the agents behind them. 
+
+Next, the system enters the ```announcementLoop()``` in which each agent makes an announcement. Each announcement is stored into an array called ```commonKnowledge```, which will be used later to update the Kripke model. After the first announcement is made, the worlds accessible for each agent (except the tallest one) is updated with the function ```updateKripkeModel()``` so that all worlds containing an even number of red hats (if the tallest agent said <span style="color: blue">'blue'</span>) or an odd number of red hats (if the tallest agent said <span style="color: red">'red'</span>) are eliminated. The next agent in line, the second tallest agent, deduces the colour of his hat by checking if his/her hat colour is the same in all worlds currently accessible. If so, (s)he announces it and the new announcement is added to the common knowledge array. In the next iteration, the Kripke model of the remaining agents is updated by first eliminating all worlds in which the agent that just spoke wears a different hat color than the one announced and then by deleting again all worlds that contain an even or odd number of red hats, according to what the tallest agent announced. The agent next in line deduce the hat color using the same strategy as before. This continues in a loop until all agents have spoken.
+
+After each agent has made an announcement, the user can decide to view the update Kripke model. In this case, a graph of the (updated) Krike model is created and saved in the same folder as the programme. The graph is created with ```graphviz``` and shows the real world in green, the other worlds in white and the edge labels represent the agent id (for example the label *2* represents agent 2). When many agents are used, due to the high number of worlds that need to be drawn, the function might output a warning such as 'Too many nodes' and the graph might failed to be correctly saved. That is anothe reason why we advice the user to choose a maximum number of agents of about 10. The figure below shows an example of a graph generated by the programme.
+
+```{r, echo=FALSE, out.width = '100%', fig.align='center',fig.cap='Example of Kripke model generated by the programme'}
+knitr::include_graphics("pictures/generatedModel.png")
+```
+
+When the announcement loop terminates, a function called ```checkRiddle()``` checks if at most one mistake has been made. This is done by comparing the ```commonKnowledge``` with the hat distribution input at the very beginning of the riddle. The comparison is done with ```numpy.sum```, which outputs the number of dissimilar items of two arrays. If the correct strategy had been implemented, this comparison should never output more than one dissimilar item. In the end, the system outputs a friendly message such as: ""Wow you are a highly intelligence specie, you will not be eaten!". 
+
+## Riddle 1: strategy 2
+
+As it was the case with strategy 1, the initial Kripke model is created in the same way as before. The announcement loop starts again and the tallest agent announces either *blue* or *pass* according to the strategy explained in the Strategy section. The Kripke model for each agent is updated in the following way. First, if the tallest agent announced *blue*, all worlds are removed except the one in which all but the tallest agent are wearing a red hat. On the contrary, if the tallest agent passed, the world that was kept in the previous case is eliminated instead. The agent next in line, looks at all his/her accessible worlds: If in all cases (s)he is wearing the same hat color, she announces it, otherwise (s)he passed. The Kripke model is updated again in two ways, which follow directly from the strategy explained before. 
+⋅⋅* If some agents before him/her has announced a color, all worlds in which (s)he is wearing a blue hat are eliminated.
+..* If all agents before him/her have passed and (s)he sees nothing but red hats, all worlds in wich (s)he is wearing a red hat are eliminated.
+
+Again the agent looks at all his/her accessible worlds after the update and annouces either a color or *pass*. This continues in a loop until all agents have spoken.
+
+When the loop terminates, the function ```checkRiddle()``` checks if a mistake is made and if all agent have passed. In these cases, the system outputs a message informing the user that all agents will be eaten. 
+
+## Riddle 2
+TO DO
+
+# Conclusion and future implementations
+In this project we showed how Kripke models and Public Announcement Logic can be used to analyse riddles. Any riddle which involves announcement made by agents can be analysed in a similar way as the riddles presented. 
+
+TO DO
+
+</div>
