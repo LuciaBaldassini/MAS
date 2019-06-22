@@ -11,7 +11,6 @@ python3 run.py
 The packages required are:
 ```
 numpy
-pandas
 pygraphviz
 graphviz
 ```
