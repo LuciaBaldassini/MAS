@@ -37,7 +37,7 @@ Know that we notice everything! So, do not even think of saying other words than
 
 ##  Description riddle 1: variation
 
-TO DO 
+In a variation of this riddle, the prisoners are not allowed to make any mistakes, but are allowed to pass their turn. However, they are not all allowed to always pass so at least one prisoner should correctly guess the colour of their hat. This variation involves an entirely different strategy, which will be described in the "Strategies" section.
 
 ## Description riddle 2
 
@@ -61,9 +61,20 @@ The tallest agents does not hear any information from another agent before he ha
 The game's goal is to have as many of the agents correctly guess their hat colour. The game is successfully played if at most one mistake is made. Therefore, since only the tallest agent is unsure of his answer, the game is always played successfully if the above-mentioned technique is applied.
 
 ## Riddle 1: second strategy
-In the variation of riddle 1 we need to apply a different strategy compared to the one explained before. 
+In the variation of riddle 1 we need to apply a different strategy compared to the one explained before, as the tallest agent cannot afford to make a wrong guess to convey the odd or even number of hats. The strategy to win is the following for the first agent agents:
+<ul>
+<li>Or, <span style="color:blue">"Blue"</span> to indicate that all agents in front of him are wearing a <span style="color:red">red</span> hat. </li>
+<li>"Pass", otherwise.</li>
+</ul>
 
-TO DO
+The strategy is the following for the other agents agents:
+<ul>
+<li>Or, <span style="color:blue">"Blue"</span> if all agents in front of him are wearing a <span style="color:red">red</span> hat and all agents before him passed. </li>
+<li><span style="color:red">"Red"</span> if an agent before him said either <span style="color:red">"red"</span> or <span style="color:blue">"blue"</span>.</li>
+<li>"pass" otherwise.</li>
+</ul>
+
+This strategy works in every sequence of hats where there is a <span style="color:red">"red"</span> hat followed by only <span style="color:blue">"blue"</span> hats, even if only the shortest agent has a <span style="color:red">"red"</span> hat. The only case that this strategy fails, is when all agents are wearing a <span style="color:blue">"blue"</span> hat and so the first agent, according to this strategy, says <span style="color:red">"red"</span>. However, this only occurs in very few cases, especially with a large number of agents (for example: 1/1024 cases for 10 agents) and is therefore safer to use than the first strategy.
 
 ## Riddle 2
 
@@ -167,10 +178,38 @@ knitr::include_graphics("pictures/hats_rbb_after3,2.png")
 
 Because <span style="color:#00FF00">Agent 1</span> knows that there is an even number of <span style="color:red">red</span> hats (from the first announcement) and that <span style="color:#FF8000">Agent 2</span> is wearing a <span style="color:blue">blue</span> hat (from the second announcement), he concludes that in the real world there are 0 <span style="color:red">red</span> hats and he announces that the colour of his own hat is <span style="color:blue">blue</span>, solving the riddle.  
 
+### Example Analysis Scenario 3 using strategy 2
 
-## Riddle 1: strategy 2 
+For the second strategy, we will look at scenario 3. In this example, <span style="color:#00FF00">Agent 1</span> (the smallest agent) will be wearing a <span style="color:red">red</span> hat. <span style="color:#FF8000">Agent 2</span> (the middle agent) will be wearing a <span style="color:blue">blue</span> hat. <span style="color:#007FFF">Agent 3</span> (the tallest agent) will be wearing a <span style="color:red">red</span> hat. 
 
-TO DO 
+```{r, echo=FALSE, out.width = '100%', fig.align='center'}
+knitr::include_graphics("pictures/Prisoners_rbr.png")
+```
+
+
+Initially, we can draw a Kripke model similar to strategy 1: <span style="color:#007FFF">Agent 3</span> is unsure of only the colour of his own hat. The knowledge of <span style="color:#FF8000">Agent 2</span> contains worlds in which both his and <span style="color:#007FFF">Agent 3</span>'s hat colour vary. The knowledge of <span style="color:#00FF00">Agent 1</span> contains all possible combinations of <span style="color:blue">blue</span> and <span style="color:red">red</span>. 
+
+```{r, echo=FALSE, out.width = '100%', fig.align='center'}
+knitr::include_graphics("pictures/hats_rbr_agent3,2,1.png")
+```
+
+Note the similarity to the initial Kripke model in strategy 1. The only thing different is that the worlds where <span style="color:#00FF00">Agent 1</span> is wearing a <span style="color:blue">blue</span> hat and a <span style="color:red">red</span> hat are swapped (for strategy one the <span style="color:blue">blue</span> hats are at the bottom, the strategy 2 they are at the top.)
+
+Now, according to the strategy, <span style="color:#007FFF">Agent 3</span> will pass its turn as he or she does not see only <span style="color:red">red</span> hats. This announcement already decreases the possible worlds for <span style="color:#00FF00">Agent 1</span> and <span style="color:#FF8000">Agent 2</span>. For both, all worlds in which they are both wearing a <span style="color:red">red</span> hat are not accessible anymore.
+
+The Kripke model is updated to:
+
+```{r, echo=FALSE, out.width = '100%', fig.align='center'}
+knitr::include_graphics("pictures/hats_rbr_after3.png")
+```
+
+Now, <span style="color:#FF8000">Agent 2</span> can say with certainty that their hat colour is <span style="color:blue">blue</span> and announces this. Now, <span style="color:#00FF00">Agent 1</span> realizes that their hat colour must be <span style="color:red">red</span>, because if the hat of <span style="color:#FF8000">Agent 2</span> had been <span style="color:blue">blue</span> he would have passed his turn, therefore <span style="color:#00FF00">Agent 1</span> announces the colour of their hat to be <span style="color:red">red</span> (this is also what should happen according to the strategy because someone made a guess before).
+
+The final Kripke model again looks familiar: 
+
+```{r, echo=FALSE, out.width = '100%', fig.align='center'}
+knitr::include_graphics("pictures/hats_rbr_after3,2.png")
+```
 
 ## Riddle 2
 
@@ -230,19 +269,27 @@ When the announcement loop terminates, a function called ```checkRiddle()``` che
 ## Riddle 1: strategy 2
 
 As it was the case with strategy 1, the initial Kripke model is created in the same way as before. The announcement loop starts again and the tallest agent announces either *blue* or *pass* according to the strategy explained in the Strategy section. The Kripke model for each agent is updated in the following way. First, if the tallest agent announced *blue*, all worlds are removed except the one in which all but the tallest agent are wearing a red hat. On the contrary, if the tallest agent passed, the world that was kept in the previous case is eliminated instead. The agent next in line, looks at all his/her accessible worlds: If in all cases (s)he is wearing the same hat color, she announces it, otherwise (s)he passed. The Kripke model is updated again in two ways, which follow directly from the strategy explained before. 
-⋅⋅* If some agents before him/her has announced a color, all worlds in which (s)he is wearing a blue hat are eliminated.
-..* If all agents before him/her have passed and (s)he sees nothing but red hats, all worlds in wich (s)he is wearing a red hat are eliminated.
+* If some agents before him/her has announced a color, all worlds in which (s)he is wearing a blue hat are eliminated.
+* If all agents before him/her have passed and (s)he sees nothing but red hats, all worlds in wich (s)he is wearing a red hat are eliminated.
+As previousely, the user has the option to inspect the updated Kripke model after each announcement.
 
 Again the agent looks at all his/her accessible worlds after the update and annouces either a color or *pass*. This continues in a loop until all agents have spoken.
 
 When the loop terminates, the function ```checkRiddle()``` checks if a mistake is made and if all agent have passed. In these cases, the system outputs a message informing the user that all agents will be eaten. 
 
 ## Riddle 2
-TO DO
+
+As in the case of Riddle 1, the initial Kripke model is created in the same way as before. We also defined a dictionary in which each hat color is associated to a number, as it was explained in the Strategy section. This dictionary is used throughout the programme to map colors to number and viceversa. We also declared an initial tally of 30: we used this number because it was the one used in the description of the riddle but any multiples of 3 coud have been used.
+
+The announcement loop starts again: the tallest agent calculates the checksum of the hats in front with the function ```calculateCheckSum```. This function loops over the hats that each agent sees and sum the corresponding numbers. The agent calculates the color of his/her own hat by taking the checksum and performing modulo 3 division. The color announced by the agent is added to the common knowledge and it is subtracted from the running tally. After the first announcement the Kripke model is updated in the following way. The agent next in line (the second tallest) calculates his/her hat colors by calculating the checksum, subtracting it from the running tally and performing the modulo 3 division. All the worlds in which that agent is not wearing the hat coloe (s)he has calculated are eliminated. The announcement is then added to the common knowledge. As previousey, the announcement loop continues until all agents have spoken.
+
+At the end of the loop, a function calculates the final prize by multiplying the number of hats that were guessed correctly by 10000.  
 
 # Conclusion and future implementations
 In this project we showed how Kripke models and Public Announcement Logic can be used to analyse riddles. Any riddle which involves announcement made by agents can be analysed in a similar way as the riddles presented. 
 
-TO DO
+Riddle 1 was a clear example of how agents can reason about the worlds accessible to them to come up with the right conclusion. Riddle 2 was perhaps a less blatant example, since agents needed to only apply a formula to deduce the hat color. However, a correct guess was only possible thanks to the announncement of the previous agent, thus we decided to include that as well. We thought it was interesting to include two strategies of the same riddle to show that there actually many possible ways in which a riddle can be solved. The first strategy was the most optimal one, in which everyone was guaranteed survival in every possible scenario. We though it was interesting to also include one which failed in one scenario. It was also interesting to include this second strategy because agents were allowed to pass and not just guess a hat color. We thought that having some variation in our programme would make the user experience more pleasant.
+
+Unfortunately, the time at our disposal was limited and there is still room for implementation. For example, a nice user interface could be wrapped around the programme. At the early stages of our project we though of developing our programme as a phone application. However, due to time contraints, we had to 
 
 </div>
