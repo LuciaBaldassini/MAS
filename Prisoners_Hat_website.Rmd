@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-For our projects we were interested in analysing riddles involving agents wearing different hats color. In this type of riddles, agents wear a hat, usually assigned randomly, and have to guess their hat color. These riddles are perfect for applying Kripke models and Public Annnouncement Logic. After each agent makes an announcement, the accessible worlds of the following agents are reduced so that agents become sure about their hat because in all worlds accessible to them they all wear the same color. 
+For our project we were interested in analysing riddles involving agents wearing different hats color. In this type of riddles, agents wear a hat, usually assigned randomly, and have to guess their hat color. These riddles are perfect for applying Kripke models and Public Annnouncement Logic. After each agent makes an announcement, the accessible worlds of the following agents are reduced so that agents become sure about their hat because in all worlds accessible to them they all wear the same color. 
 In our porject we analysed two riddles, which will be briefly explained below. For one of the two riddles, two strategies are implemented. 
 
 The 'Strategy' section shows the strategies used to solve both riddles. In the 'Analysis' section we provide, for each riddle and each strategy, a practical example in which Kripke models and Public Announcement Logic is directly applied. The 'Implementation' section provides a description of how the strategies where implemented in the programme. Lastly, in the 'Conclusion and further improvements' we provide a brief discussion of the project and possibilities for further improvements.
@@ -53,7 +53,7 @@ Each of you will have either a <span style="color:red">red</span>, a <span style
 The strategy to win this game and, hence, be freed by the aliens is to agree that the tallest agent says:
 <ul>
 <li> <span style="color:blue">"Blue"</span> to indicate that he sees an odd number of <span style="color:red">red</span> hats in front of him;</li>
-<li>Or, <span style="color:red">"Red"</span> to indicate that he sees an even number of <span style="color:red">red</span> hats in front of him. </li>
+<li><span style="color:red">"Red"</span> to indicate that he sees an even number of <span style="color:red">red</span> hats in front of him. </li>
 </ul>
 
 The tallest agents does not hear any information from another agent before he has to speak. Since he cannot be entirely sure about his own hat colour, he has to guess. This is not immediately a big problem, since the aliens allowed the agents to make one mistake. Since all other agents can say with full certainty which colour their hat is, there will not be made more than one mistake in total by the group. Namely, on the basis of hearing the previous answer(s) and seeing the hats in front of them, each agent can update his beliefs and determine his own hat colour. 
@@ -63,15 +63,15 @@ The game's goal is to have as many of the agents correctly guess their hat colou
 ## Riddle 1: second strategy
 In the variation of riddle 1 we need to apply a different strategy compared to the one explained before, as the tallest agent cannot afford to make a wrong guess to convey the odd or even number of hats. The strategy to win is the following for the first agent agents:
 <ul>
-<li>Or, <span style="color:blue">"Blue"</span> to indicate that all agents in front of him are wearing a <span style="color:red">red</span> hat. </li>
+<li><span style="color:blue">"Blue"</span> to indicate that all agents in front of him are wearing a <span style="color:red">red</span> hat. </li>
 <li>"Pass", otherwise.</li>
 </ul>
 
 The strategy is the following for the other agents agents:
 <ul>
-<li>Or, <span style="color:blue">"Blue"</span> if all agents in front of him are wearing a <span style="color:red">red</span> hat and all agents before him passed. </li>
+<li><span style="color:blue">"Blue"</span> if all agents in front of him are wearing a <span style="color:red">red</span> hat and all agents before him passed. </li>
 <li><span style="color:red">"Red"</span> if an agent before him said either <span style="color:red">"red"</span> or <span style="color:blue">"blue"</span>.</li>
-<li>"pass" otherwise.</li>
+<li>"Pass" otherwise.</li>
 </ul>
 
 This strategy works in every sequence of hats where there is a <span style="color:red">"red"</span> hat followed by only <span style="color:blue">"blue"</span> hats, even if only the shortest agent has a <span style="color:red">"red"</span> hat. The only case that this strategy fails, is when all agents are wearing a <span style="color:blue">"blue"</span> hat and so the first agent, according to this strategy, says <span style="color:red">"red"</span>. However, this only occurs in very few cases, especially with a large number of agents (for example: 1/1024 cases for 10 agents) and is therefore safer to use than the first strategy.
@@ -290,6 +290,7 @@ In this project we showed how Kripke models and Public Announcement Logic can be
 
 Riddle 1 was a clear example of how agents can reason about the worlds accessible to them to come up with the right conclusion. Riddle 2 was perhaps a less blatant example, since agents needed to only apply a formula to deduce the hat color. However, a correct guess was only possible thanks to the announncement of the previous agent, thus we decided to include that as well. We thought it was interesting to include two strategies of the same riddle to show that there actually many possible ways in which a riddle can be solved. The first strategy was the most optimal one, in which everyone was guaranteed survival in every possible scenario. We though it was interesting to also include one which failed in one scenario. It was also interesting to include this second strategy because agents were allowed to pass and not just guess a hat color. We thought that having some variation in our programme would make the user experience more pleasant.
 
-Unfortunately, the time at our disposal was limited and there is still room for implementation. For example, a nice user interface could be wrapped around the programme. At the early stages of our project we though of developing our programme as a phone application. However, due to time contraints, we had to 
+Unfortunately, due to time contraints, there is still room for improvements. For example, a nice user interface could be wrapped around the programme. At the early stages of our project we though of developing our programme as a phone application. However, the time at our disposal was not much so we decided to make it a command line programme. Of course this is at the expense of a nice graphics which will make the user experience more enjoable. 
+Secondly, it would have been nice to include other types of riddles (not just hat riddles) that also uses Public Announcement Logic. In this way, we could have shown that Public Announcement Logic cam be applied to a wide variaty of riddles. Moreover, it would have been nice to let the user decide his/her own stratey. The programme coould have then dinamically updated the kripke models according to the user strategy. We leave those ideas as a strarting points for future projects. 
 
 </div>
