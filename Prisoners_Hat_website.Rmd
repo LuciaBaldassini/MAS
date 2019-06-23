@@ -84,7 +84,7 @@ The winning strategy is called the "checksum modulo-3" method. The prisoners agr
 
 # Analysis
 
-## Riddle 1: strategy 1
+## Riddle 1
 Depending on the number of agents and the hat colours assigned to each of them, there are multiple different scenarios possible. 
 As an example, we will elaborate on the possible worlds in which three agents are participating in total. Each of the agents is either wearing a <span style="color: red">red</span> or <span style="color:blue">blue</span> hat. The following table indicates the 8 different scenarios that are possible in this situation. The arrows visualize the direction in which the particular agent is looking. T he colour of the cell represents the agent's hat colour. 
 
@@ -141,7 +141,7 @@ As an example, we will elaborate on the possible worlds in which three agents ar
 </table>
 
 
-### Example Analysis Scenario 4
+### Example Analysis Scenario 4 using strategy 1
 In order to analyze the problem, we will present an example and go through all the agents' announcements and the changes to the Kripke model. This way, we can explore how the knowledge of the agents change. 
 
 In our example, <span style="color:#00FF00">Agent 1</span> (the smallest agent) will be wearing a <span style="color:blue">blue</span> hat. <span style="color:#FF8000">Agent 2</span> (the middle agent) will also be wearing a <span style="color:blue">blue</span> hat. <span style="color:#007FFF">Agent 3</span> (the tallest agent) will be wearing a <span style="color:red">red</span> hat. 
