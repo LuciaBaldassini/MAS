@@ -142,7 +142,7 @@ As an example, we will elaborate on the possible worlds in which three agents ar
 
 
 ### Example Analysis Scenario 4 using strategy 1
-In order to analyze the problem, we will present an example and go through all the agents' announcements and the changes to the Kripke model. This way, we can explore how the knowledge of the agents change. 
+In order to analyze the problem, we will present an example and go through all the agents' announcements and the changes to the Kripke model. This way, we can explore how the worlds accessible for each agent change. 
 
 In our example, <span style="color:#00FF00">Agent 1</span> (the smallest agent) will be wearing a <span style="color:blue">blue</span> hat. <span style="color:#FF8000">Agent 2</span> (the middle agent) will also be wearing a <span style="color:blue">blue</span> hat. <span style="color:#007FFF">Agent 3</span> (the tallest agent) will be wearing a <span style="color:red">red</span> hat. 
 
@@ -157,9 +157,9 @@ knitr::include_graphics("pictures/hats_rbb_agent3,2,1.png")
 ```
 
 Firstly, <span style="color:#007FFF">Agent 3</span> will announce <span style="color:red">red</span> to indicate that he sees an even number of <span style="color:red">red</span> hats (namely, 0). After the announcement, <span style="color:#FF8000">Agent 2</span> sees a <span style="color:blue">blue</span> hat in front of him so he eliminates all the worlds in which he is wearing a <span style="color:red">red</span> hat. In fact, it is not possible for him to wear a 
-<span style="color:red">red</span> because, in this case, the tallest agent would have announced an odd number of red hats. Since this did not happen, <span style="color:#FF8000">Agent 2</span> deduces that his hat colour is <span style="color:blue">blue</span> and correctly announces it. 
+<span style="color:red">red</span> because, in this case, the tallest agent would have announced an odd number of red hats. Since this did not happen, <span style="color:#FF8000">Agent 2</span> deduces that his hat colour is <span style="color:blue">blue</span> and correctly announces it. In formal terms, the formula that <span style="color:#FF8000">Agent 2</span> uses to update the Kripke model is: [red]'there is an even number of red hats'. 
 
-<span style="color:#00FF00">Agent 1</span> also knows that there is an even number of <span style="color:red">red</span> hats, so he eliminates all the worlds in which he and <span style="color:#FF8000">Agent 2</span> are wearing different hat colours. In other words, he only keeps the worlds in which he and <span style="color:#FF8000">Agent 2</span> are wearing the same hat colour (either <span style="color:blue">blue</span> or <span style="color:red">red</span>).
+<span style="color:#00FF00">Agent 1</span> also knows that there is an even number of <span style="color:red">red</span> hats, so he performs the same updates as <span style="color:#FF8000">Agent 2</span> and eliminates all worlds in which there is an odd number of <span style="color:red">red</span> hats. The update of <span style="color:#00FF00">Agent 1</span> is: [red] 'there is an even number of red hats'.
 
 Hence, the Kripke model is updated to: 
 
@@ -168,7 +168,8 @@ Hence, the Kripke model is updated to:
 knitr::include_graphics("pictures/hats_rbb_after3.png")
 ```
 
-<span style="color:#FF8000">Agent 2</span> announced that the colour of his hat is <span style="color:blue">blue</span>. Because of this announcement, <span style="color:#00FF00">Agent 1</span> now eliminates all the worlds in which <span style="color:#FF8000">Agent 2</span> is wearing a <span style="color:red">red</span> hat. 
+<span style="color:#FF8000">Agent 2</span> announced that the colour of his hat is <span style="color:blue">blue</span>. Because of this announcement, <span style="color:#00FF00">Agent 1</span> updates the Kripke model with the formula [blue]'Agent 2 is wearing blue'
+and eliminates all the worlds in which <span style="color:#FF8000">Agent 2</span> is wearing a <span style="color:red">red</span> hat. 
 
 The Kripke model is updated to: 
 
@@ -187,15 +188,15 @@ knitr::include_graphics("pictures/Prisoners_rbr.png")
 ```
 
 
-Initially, we can draw a Kripke model similar to strategy 1: <span style="color:#007FFF">Agent 3</span> is unsure of only the colour of his own hat. The knowledge of <span style="color:#FF8000">Agent 2</span> contains worlds in which both his and <span style="color:#007FFF">Agent 3</span>'s hat colour vary. The knowledge of <span style="color:#00FF00">Agent 1</span> contains all possible combinations of <span style="color:blue">blue</span> and <span style="color:red">red</span>. 
+Initially, we can draw a Kripke model similar to strategy 1: <span style="color:#007FFF">Agent 3</span> is unsure of only the colour of his own hat. The worlds accessible for <span style="color:#FF8000">Agent 2</span> are those in which both his and <span style="color:#007FFF">Agent 3</span>'s hat colour vary. The worlds accessible for <span style="color:#00FF00">Agent 1</span> are all possible combinations of <span style="color:blue">blue</span> and <span style="color:red">red</span> of length 3 (the number of agents). 
 
 ```{r, echo=FALSE, out.width = '100%', fig.align='center'}
 knitr::include_graphics("pictures/hats_rbr_agent3,2,1.png")
 ```
 
-Note the similarity to the initial Kripke model in strategy 1. The only thing different is that the worlds where <span style="color:#00FF00">Agent 1</span> is wearing a <span style="color:blue">blue</span> hat and a <span style="color:red">red</span> hat are swapped (for strategy one the <span style="color:blue">blue</span> hats are at the bottom, the strategy 2 they are at the top.)
+Note the similarity to the initial Kripke model in strategy 1. The difference is that the worlds where <span style="color:#00FF00">Agent 1</span> is wearing a <span style="color:blue">blue</span> hat and a <span style="color:red">red</span> hat are swapped (for strategy one the <span style="color:blue">blue</span> hats are at the bottom, the strategy 2 they are at the top.)
 
-Now, according to the strategy, <span style="color:#007FFF">Agent 3</span> will pass its turn as he or she does not see only <span style="color:red">red</span> hats. This announcement already decreases the possible worlds for <span style="color:#00FF00">Agent 1</span> and <span style="color:#FF8000">Agent 2</span>. For both, all worlds in which they are both wearing a <span style="color:red">red</span> hat are not accessible anymore.
+Now, according to the strategy, <span style="color:#007FFF">Agent 3</span> will pass its turn as (s)he does not see only <span style="color:red">red</span> hats. This announcement already decreases the possible worlds for <span style="color:#00FF00">Agent 1</span> and <span style="color:#FF8000">Agent 2</span>. Both agents perform the following update of the Kripke model [pass]'Agent 2 and Agent 1 are not wearing a red hat' and elimnate those worlds.
 
 The Kripke model is updated to:
 
@@ -203,7 +204,7 @@ The Kripke model is updated to:
 knitr::include_graphics("pictures/hats_rbr_after3.png")
 ```
 
-Now, <span style="color:#FF8000">Agent 2</span> can say with certainty that their hat colour is <span style="color:blue">blue</span> and announces this. Now, <span style="color:#00FF00">Agent 1</span> realizes that their hat colour must be <span style="color:red">red</span>, because if the hat of <span style="color:#FF8000">Agent 2</span> had been <span style="color:blue">blue</span> he would have passed his turn, therefore <span style="color:#00FF00">Agent 1</span> announces the colour of their hat to be <span style="color:red">red</span> (this is also what should happen according to the strategy because someone made a guess before).
+Now, <span style="color:#FF8000">Agent 2</span> can say with certainty that their hat colour is <span style="color:blue">blue</span> and announces this. Now, <span style="color:#00FF00">Agent 1</span> realizes that their hat colour must be <span style="color:red">red</span>, because if the hat of <span style="color:#FF8000">Agent 2</span> had been <span style="color:blue">blue</span> he would have passed his turn. He update the Kripke model with the formula [blue]'Agent 1 is wearing a red hat' and elimnates all the worlds in which he is wearing a <span style="color:blue">blue</span> hat.  
 
 The final Kripke model again looks familiar: 
 
@@ -220,7 +221,7 @@ As the "checksum modulo-3" method might be hard to imagine, we will provide a br
 knitr::include_graphics("pictures/Prisoners_yrb.png")
 ```
 
-Initially, we could draw the following Kripke model: <span style="color:#007FFF">Agent 3</span> is unsure of only the colour of his own hat. The knowledge of <span style="color:#FF8000">Agent 2</span> contains worlds in which both his and  <span style="color:#007FFF">Agent 3</span>'s hat colour vary. The knowledge of <span style="color:#00FF00">Agent 1</span> contains all possible combinations of <span style="color:yellow">yellow</span>, <span style="color:blue">blue</span> and <span style="color:red">red</span>. 
+Initially, we could draw the following Kripke model: <span style="color:#007FFF">Agent 3</span> is unsure of only the colour of his own hat. The worlds accessible for <span style="color:#FF8000">Agent 2</span> contain worlds in which both his and  <span style="color:#007FFF">Agent 3</span>'s hat colour vary. The worlds accessible for <span style="color:#00FF00">Agent 1</span> contains all possible combinations of <span style="color:yellow">yellow</span>, <span style="color:blue">blue</span> and <span style="color:red">red</span> of length 3. 
 
 ```{r, echo=FALSE, out.width = '100%', fig.align='center'}
 knitr::include_graphics("pictures/hats_yrb_agent3,2,1.png")
@@ -228,13 +229,13 @@ knitr::include_graphics("pictures/hats_yrb_agent3,2,1.png")
 
 In this scenario, <span style="color:#007FFF">Agent 3</span> can see one <span style="color:red">red</span> hat (=2) and one <span style="color:blue">blue</span> hat (=1). He calculates the sum (2+1=3) and performs a modulo (3%3=0). He ends up with 0, which represents <span style="color:yellow">yellow</span>. Therefore, he says "<span style="color:yellow">yellow</span>". 
 
-<span style="color:#FF8000">Agent 2</span> adds the current number (0) to the previously mentioned 30, resulting in 30. As he sees a <span style="color:blue">blue</span> hat, he subtracts the corresponding number from the running tally (30-1=29) and performs a modulo 3 (29%3=2), ending up with value 2. This means <span style="color:#FF8000">Agent 2</span> will, correctly, say "span style="color:red">red</span>". Before the utterance of <span style="color:#FF8000">Agent 2</span>, there was nothing for <span style="color:#00FF00">Agent 1</span> to update his Kripke model with. Therefore, only after the first utterance of <span style="color:#007FFF">Agent 3</span>, the Kripke model is updated to:
+<span style="color:#FF8000">Agent 2</span> adds the code of the hat color that was just announced (namely 0) to the previously mentioned 30, resulting in 30. As he sees a <span style="color:blue">blue</span> hat, he subtracts the corresponding number from the running tally (30-1=29) and performs a modulo 3 (29%3=2), ending up with value 2. This means <span style="color:#FF8000">Agent 2</span> will, correctly, say <span style="color:red">red</span>". He thus update the worlds accessible to him with the formula [yellow]'Agent 2 is wearing a red hat'.  Before the utterance of <span style="color:#FF8000">Agent 2</span>, there was nothing for <span style="color:#00FF00">Agent 1</span> to update his Kripke model with. Therefore, after the first utterance of <span style="color:#007FFF">Agent 3</span>, the Kripke model is updated to:
 
 ```{r, echo=FALSE, out.width = '100%', fig.align='center'}
 knitr::include_graphics("pictures/hats_yrb_after3.png")
 ```
 
-<span style="color:#00FF00">Agent 1</span> also updated its running tally after <span style="color:#007FFF">Agent 3</span>'s turn, which is 30 at this point. After the utterance of <span style="color:#FF8000">Agent 2</span>, the value is adjusted to 1 after subtraction and applying the modulo of 3 to the value ((30-2)%3=1). This concludes that, according to this strategy, Agent 1 is wearing a <span style="color:blue">blue</span> hat. This results in the final Kripke model:
+<span style="color:#00FF00">Agent 1</span> also updated its running tally after <span style="color:#007FFF">Agent 3</span>'s turn, which is 30 at this point. After the utterance of <span style="color:#FF8000">Agent 2</span>, the value is adjusted to 1 after subtraction and applying the modulo of 3 to the value ((30-2)%3=1). The Kripke model is updated with: [red]'Agent1 is wearing blue'. This results in the final Kripke model:
  
 
 ```{r, echo=FALSE, out.width = '100%', fig.align='center'}
