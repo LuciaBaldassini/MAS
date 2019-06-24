@@ -1,4 +1,4 @@
-# this script implements riddle1 with either strategy 1 or strategy 2
+# this script implements riddle1 with either Strategy 1 or Strategy 2
 
 import numpy as np
 import utility
@@ -12,12 +12,12 @@ def countHats(agent,agents):
 			numberRedHats += 1
 	return numberRedHats
 
-# Announcement loop for strategy 2
+# Announcement loop for Strategy 2
 def announcementLoopStrategy2(agents,model,n,hats):
 	counter=0
 	commonKnowledge=[]
 	for agent in reversed(agents):
-		# the tallest agent announces either blue or pass (see strategy)
+		# the tallest agent announces either blue or pass (see Strategy)
 		if agent.id==n:
 			print("Agent", agent.id, "announces:")
 			number=countHats(agent,agents)
@@ -51,30 +51,30 @@ def announcementLoopStrategy2(agents,model,n,hats):
 # Updates the Kripke model
 def updateKripkeStrategy2(m,commonKnowledge,a,counter,n):
 	for agent,worlds in m.items():
-		# update the worlds of the agents in front of the one that just spoke
+		# update the worlds of the agent(s) in front of the one that just spoke
 		if agent<a.id:
 			toRemove=[]
 			for w in worlds:
 				worldSubset = w[1:len(w)]
-				if counter==0: #first announcement
+				if counter==0: #First announcement
 					if commonKnowledge[counter] == 'blue':
-						if 'blue' in worldSubset == True: #remove all worlds that contain a blue hat
+						if 'blue' in worldSubset == True: #Remove all worlds that contain a blue hat
 							toRemove.append(w)
 					else: # case in which agent 1 passed
-						if worldSubset.count('red') == n - 1:  # remove the worlds that contains all red hats
+						if worldSubset.count('red') == n - 1:  # Remove the worlds that contains all red hats
 							toRemove.append(w)
-				else: # from second agent onwards
-					if 'blue' in commonKnowledge or 'red' in commonKnowledge: #say RED if someone made a guess
+				else: # From second agent onwards
+					if 'blue' in commonKnowledge or 'red' in commonKnowledge: #Say RED if someone made a guess
 						if worldSubset[counter] == 'blue':
 							toRemove.append(w)
-					elif commonKnowledge.count('pass') == len(commonKnowledge): # say BLUE if all the agents who declared before him passed and
+					elif commonKnowledge.count('pass') == len(commonKnowledge): # Say BLUE if all the agents who declared before him passed and
 						if a.id!=1 and worldSubset.count('red') == len(worldSubset): # he sees nothing but RED hats in front of him: this holds for all agents except agent 1:
 							if worldSubset[counter]=='red':
 								toRemove.append(w)
-						else: # agent 1
+						else: # Agent 1
 							if worldSubset[counter]=='red':
 								toRemove.append(w)
-			for i in toRemove: # remove the list of worlds from the dictionary
+			for i in toRemove: # Remove the list of worlds from the dictionary
 				m[agent].remove(i)
 
 
@@ -87,7 +87,7 @@ def announcementLoopStrategy1(agents, model, n, hats):
 		# The tallest agent says red or blue to indicate odd or even
 		if(agent.id == n):
 			print("Agent",agent.id,"announces:")
-			number = countHats(agent,agents) # decide if the amount of red hats in front is even or odd
+			number = countHats(agent,agents) # Decide if the amount of red hats in front is even or odd
 			if  number % 2 == 0:
 				print('red')
 				commonKnowledge.append('red')
@@ -95,7 +95,7 @@ def announcementLoopStrategy1(agents, model, n, hats):
 				print('blue')
 				commonKnowledge.append('blue')
 			updateKripkeStrategy1(model, agent, commonKnowledge, counter)
-		# the other agents deduce the hat colors based on the updated Kripke model
+		# The other agents deduce the hat colors based on the updated Kripke model
 		else:
 			color=deduceHatColour(agent,model,counter)
 			print("Agent",agent.id,"announces:")
@@ -103,7 +103,7 @@ def announcementLoopStrategy1(agents, model, n, hats):
 			commonKnowledge.append(color)
 			updateKripkeStrategy1(model, agent, commonKnowledge, counter)
 		counter +=1
-		# ask the user whether to print the graph or not
+		# Ask the user whether to print the graph or not
 		if agent.id!=1:
 			while True:
 				updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model (a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
@@ -117,19 +117,19 @@ def announcementLoopStrategy1(agents, model, n, hats):
 	return commonKnowledge
 
 
-# update the model for each agent after the announcements
+# Update the model for each agent after the announcements
 def updateKripkeStrategy1(m, a, commonKnowledge, counter):
 	for agent,worlds in m.items():
-		if agent<a.id: #only update the knowledge of the agents in front of the agent that just spoke
+		if agent<a.id: #Only update the knowledge of the agents in front of the agent that just spoke
 			toRemove=[]
 			for w in worlds:
-				worldSubset=w[1:len(w)]# remove the hat of the tallest player, this is not important
-				if counter == 0: # the first common knowledge is the number of even and odd hats
+				worldSubset=w[1:len(w)]# Remove the hat of the tallest player, this is not important
+				if counter == 0: # The first common knowledge is the number of even and odd hats
 					if commonKnowledge[0]=='red': # even number
-						if worldSubset.count('red') %2 != 0: # remove subworlds with an odd number of red hats
+						if worldSubset.count('red') %2 != 0: # Remove subworlds with an odd number of red hats
 							toRemove.append(w)
 					else: # odd number
-						if worldSubset.count('red') %2 == 0: # remove subworlds with an even number of red hats
+						if worldSubset.count('red') %2 == 0: # Remove subworlds with an even number of red hats
 							m[agent].remove(w)
 				else:
 					if worldSubset[counter-1]!=commonKnowledge[counter]:
@@ -138,18 +138,18 @@ def updateKripkeStrategy1(m, a, commonKnowledge, counter):
 						if worldSubset.count('red') %2 != 0: # remove subworlds with an odd number of red hats
 							toRemove.append(w)
 					elif commonKnowledge[0]=='blue' and w not in toRemove: # odd number
-						if worldSubset.count('red') %2 == 0: # remove subworlds with an even number of red hats
+						if worldSubset.count('red') %2 == 0: # Remove subworlds with an even number of red hats
 							m[agent].remove(w)
-			for i in toRemove: # remove the list of worlds from the dictionary
+			for i in toRemove: # Remove the list of worlds from the dictionary
 				m[agent].remove(i)
 				
 # deduces the hat colour of an agent
 def deduceHatColour(a,m,counter):
-	worlds=m[a.id] # copy the worlds of a given agent
+	worlds=m[a.id] # Copy the worlds of a given agent
 	knowsHat=1
 	for w in range(0,len(worlds)):
 		for nextWorld in range(1,len(worlds)):
-			if worlds[w][counter]!=worlds[nextWorld][counter] : # compare if the element at the position of the agent is the same for all worlds
+			if worlds[w][counter]!=worlds[nextWorld][counter] : # Compare if the element at the position of the agent is the same for all worlds
 				knowsHat=0
 				break
 			else:

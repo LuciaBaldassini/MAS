@@ -7,7 +7,7 @@ from itertools import product
 from collections import defaultdict
 
 
-# randomly assign a hat colour to each agent
+# Randomly assign a hat colour to each agent
 def assignRandomHat(n,colorPossibility):
 	agents = []  
 	hats = []
@@ -21,7 +21,7 @@ def assignRandomHat(n,colorPossibility):
 	print("The agents are distributed like this (from tallest to shortest):",list(reversed(hats)))
 	return agents,hats
 
-# let the user assign a hat colour for each agent		
+# Let the user assign a hat colour for each agent
 def assignHatUser(n,colorPossibility):
 	agents = []
 	print("\nType the colours of the hats of the prisoners. \nPlease choose only \"red\" or \"blue\"")
@@ -42,7 +42,7 @@ def assignHatUser(n,colorPossibility):
 	print("The agents are distributed like this (from tallest to shortest):",list(reversed(hats)))
 	return agents,hats
 
-# creates the knowledge of each agent at the beginning of the riddle (before any announcements) and optionally prints it
+# Creates the knowledge of each agent at the beginning of the riddle (before any announcements) and optionally prints it
 def createAgentKnowledge(agents,n,hats,colorChoices):
 	model = defaultdict(list)
 	allWorlds=list(product(colorChoices,repeat = n)) # creates all possible worlds by finding all possible combinations of red, blue (and yellow in the case of riddle 2) of length n

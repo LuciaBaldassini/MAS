@@ -18,10 +18,10 @@ def calculateCheckSum(id,h):
 	subArray=h[:id-1]
 	for hats in subArray:
 		if hats in hatsCode:
-			checkSum += hatsCode[hats] # calculate the checkSum of the hats in the row in front of each agent
+			checkSum += hatsCode[hats] # Calculate the checkSum of the hats in the row in front of each agent
 	return checkSum
 
-# returns the color and the associated modulo
+# Returns the color and the associated modulo
 def calculateHatColor(checkSum):
 	modulo=checkSum%3
 	if modulo in hatsCode.values():
@@ -33,7 +33,7 @@ def announcementLoop(agents,model,n,hats):
 	commonKnowledge=[]
 	counter=0
 	for agent in reversed(agents):
-		# the tallest agent performs the check sum and the modulo division, announces it and the Kripke model is updated
+		# The tallest agent performs the check sum and the modulo division, announces it and the Kripke model is updated
 		if agent.id==n:
 			s=calculateCheckSum(agent.id,hats)
 			c,m=calculateHatColor(s)
@@ -42,7 +42,7 @@ def announcementLoop(agents,model,n,hats):
 			print("Agent", agent.id, "announces:")
 			print(c)
 			c, modulo = updateKripkeModel(model, agent, hats, runningTally,c,counter)
-		# with the updated Kripke model, the agent next in line make the anouncement and the model is updated again
+		# With the updated Kripke model, the agent next in line make the anouncement and the model is updated again
 		else:
 			print("Agent", agent.id, "announces:")
 			print(c)
@@ -51,7 +51,7 @@ def announcementLoop(agents,model,n,hats):
 			if agent.id!=1:
 				c,modulo=updateKripkeModel(model, agent, hats, runningTally,c,counter)
 		counter += 1
-		# ask to optionally draw the Kripke model
+		# Ask to optionally draw the Kripke model
 		if agent.id!=1:
 			while True:
 				updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model (a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
@@ -83,7 +83,7 @@ def updateKripkeModel(m,a,hats, runningTally,previousAnnouncement,counter):
 		m[a.id-1].remove(i)
 	return c,modulo
 
-# function that checks if the riddle was solved and outputs a friendly message.
+# Function that checks if the riddle was solved and outputs a friendly message.
 def calculateTotalWin(hatColors,hats):
 	totalWin=0
 	hatColors.reverse()
@@ -92,7 +92,7 @@ def calculateTotalWin(hatColors,hats):
 			totalWin += 10000
 	print('Congratulations! You won in total',totalWin,'€!')
 
-# runs riddle2
+# Runs riddle2
 def runRiddle2(a,number_prisoners,h):
 	m=utility.createAgentKnowledge(a,number_prisoners,h,['red','blue','yellow'])
 	c=announcementLoop(a,m,number_prisoners,h)
