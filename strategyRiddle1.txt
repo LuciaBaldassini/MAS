@@ -1,6 +1,6 @@
 STRATEGY RIDDLE 1 
 
-You can choose two different srategies.
+You can choose two different strategies.
 
 STRATEGY 1: 
 
@@ -9,7 +9,7 @@ The strategy to win this game and be freed by the aliens is to agree that the ta
  - Blue to indicate that he sees an odd number of red hats in front of him.
  - Red to indicate that he sees an even number of red hats in front of him.
 
-ALl the other agents can infer their hat colors based on this announcement. 
+ALl other agents can infer their hat colors based on this announcement. 
 
 STRATEGY 2:
 

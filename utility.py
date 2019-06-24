@@ -1,7 +1,8 @@
+# this script contains functions tat are used for both riddles
+
 import Agent
 import numpy as np
 from pygraphviz import *
-import graphviz
 from itertools import product
 from collections import defaultdict
 
@@ -44,7 +45,7 @@ def assignHatUser(n,colorPossibility):
 # creates the knowledge of each agent at the beginning of the riddle (before any announcements) and optionally prints it
 def createAgentKnowledge(agents,n,hats,colorChoices):
 	model = defaultdict(list)
-	allWorlds=list(product(colorChoices,repeat = n)) # creates all possible worlds by finding all possible combinations of red, blue (and yellow in the case of riddle 2)
+	allWorlds=list(product(colorChoices,repeat = n)) # creates all possible worlds by finding all possible combinations of red, blue (and yellow in the case of riddle 2) of length n
 	for a in agents:
 		if (a.id == 1): # the shortest agent have access to all possible worlds
 			model[a.id] = allWorlds
@@ -62,25 +63,23 @@ def createAgentKnowledge(agents,n,hats,colorChoices):
 		else:
 			break
 	if kripkeChoice=="yes":
-		printGraph(model,hats,0,1)
+		printGraph(model,hats,0)
 	return model
-	
-def printGraph(m,h,counter,riddleNumber):
-	#path = Path("KripkeModels") / ("Riddle" + str(riddleNumber))
+
+# Draws the Kripke model in a graph and saves it in the same folder
+def printGraph(m,h,counter):
 	filename="model"+str(counter)+".png"
-	#if not path.is_dir():
-	#	path.mkdir(parents=True)
 	g=AGraph(rankdir='LR',ratio='auto')
 	realWorld=h.copy()
 	realWorld.reverse()
-	g.add_node(tuple(realWorld),style='filled',fillcolor='green')	# add the current world, in green
+	g.add_node(tuple(realWorld),style='filled',fillcolor='green')	# add the real world, in green
 	for key,value in m.items():
 		l = printEdgeLabel(m,key)
 		for w in range(0,len(value)):
-			g.add_edge(tuple(realWorld),value[w],label=l,dir='both') # add an edge for each accessibility relations, nodes are created automatically. Each edge is labelled with the agent number
-	#os.chdir(str(path))
+			g.add_edge(tuple(realWorld),value[w],label=l,dir='both') # add an edge for each accessibility relations, nodes are created automatically. Each edge is labelled with the agent id
 	g.draw(filename,prog='dot') # print it to file
 
+# Determines which label should be printed for each edge
 def printEdgeLabel(m,k):
 	label=[]
 	for key in m.keys():

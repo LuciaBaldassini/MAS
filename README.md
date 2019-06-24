@@ -1,10 +1,10 @@
 # The prisoner and hat riddle
 
-This programme solves the prisoner and hat riddle with n agents chosen by the user.
+This programme solves two different prisoner and hat riddles with n agents chosen by the user. The first riddle can be solved with two different strategies.
 
 ## How to use it
 
-To use the programme, clone the repository and run the file prisoners_and_hats.py with the command:
+To use the programme, clone the repository and run the file run.py with the command:
 ```
 python3 run.py
 ```
@@ -12,7 +12,6 @@ The packages required are:
 ```
 numpy
 pygraphviz
-graphviz
 ```
 ## Collaborators
 [Danielle Metz](https://github.com/daniellemetz)

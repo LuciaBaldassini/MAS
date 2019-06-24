@@ -1,4 +1,5 @@
 
+# class Agent stores the agent id, the color of his own hat and the hat colors of the agents in front of him
 class Agent:
 	
 	def __init__(self, id, color):

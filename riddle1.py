@@ -1,8 +1,10 @@
+# this script implements riddle1 with either strategy 1 or strategy 2
+
 import numpy as np
 import utility
 
 
-# counts the number of red hats and checks whether to ouput red or blue
+# counts the number of red hats
 def countHats(agent,agents):
 	numberRedHats=0
 	for a in agents[:agent.id-1]:
@@ -10,10 +12,12 @@ def countHats(agent,agents):
 			numberRedHats += 1
 	return numberRedHats
 
+# Announcement loop for strategy 2
 def announcementLoopStrategy2(agents,model,n,hats):
 	counter=0
 	commonKnowledge=[]
 	for agent in reversed(agents):
+		# the tallest agent announces either blue or pass (see strategy)
 		if agent.id==n:
 			print("Agent", agent.id, "announces:")
 			number=countHats(agent,agents)
@@ -24,7 +28,8 @@ def announcementLoopStrategy2(agents,model,n,hats):
 				print('pass')
 				commonKnowledge.append('pass')
 			updateKripkeStrategy2(model,commonKnowledge,agent,counter,n)
-		else:  #say RED if someone makes a guess, BLUE if all the gnomes who declared before him passed and he sees nothing but RED hats in front of him, and PASS otherwise.
+		# the other agents deduce their hat color based on the updated Kripke model
+		else:
 			color=deduceHatColour(agent,model,counter)
 			print("Agent", agent.id, "announces:")
 			print(color)
@@ -40,11 +45,13 @@ def announcementLoopStrategy2(agents,model,n,hats):
 				else:
 					break
 			if (updatedkripkeChoice == "yes"):
-				utility.printGraph(model, hats, counter, 1)
+				utility.printGraph(model, hats, counter)
 	return commonKnowledge
 
+# Updates the Kripke model
 def updateKripkeStrategy2(m,commonKnowledge,a,counter,n):
 	for agent,worlds in m.items():
+		# update the worlds of the agents in front of the one that just spoke
 		if agent<a.id:
 			toRemove=[]
 			for w in worlds:
@@ -60,7 +67,7 @@ def updateKripkeStrategy2(m,commonKnowledge,a,counter,n):
 					if 'blue' in commonKnowledge or 'red' in commonKnowledge: #say RED if someone made a guess
 						if worldSubset[counter] == 'blue':
 							toRemove.append(w)
-					elif commonKnowledge.count('pass') == len(commonKnowledge): # say BLUE if all the gnomes who declared before him passed
+					elif commonKnowledge.count('pass') == len(commonKnowledge): # say BLUE if all the agents who declared before him passed and
 						if a.id!=1 and worldSubset.count('red') == len(worldSubset): # he sees nothing but RED hats in front of him: this holds for all agents except agent 1:
 							if worldSubset[counter]=='red':
 								toRemove.append(w)
@@ -73,11 +80,11 @@ def updateKripkeStrategy2(m,commonKnowledge,a,counter,n):
 
 
 
-def announcementLoop(agents,model,n,hats):
+def announcementLoopStrategy1(agents, model, n, hats):
 	counter = 0
 	commonKnowledge=[]
 	for agent in reversed(agents):
-		# only first agent says red or blue to indicate odd or even
+		# The tallest agent says red or blue to indicate odd or even
 		if(agent.id == n):
 			print("Agent",agent.id,"announces:")
 			number = countHats(agent,agents) # decide if the amount of red hats in front is even or odd
@@ -87,14 +94,16 @@ def announcementLoop(agents,model,n,hats):
 			else:
 				print('blue')
 				commonKnowledge.append('blue')
-			updateKripke(model,agent,commonKnowledge,counter)
+			updateKripkeStrategy1(model, agent, commonKnowledge, counter)
+		# the other agents deduce the hat colors based on the updated Kripke model
 		else:
 			color=deduceHatColour(agent,model,counter)
 			print("Agent",agent.id,"announces:")
 			print(color)
 			commonKnowledge.append(color)
-			updateKripke(model,agent,commonKnowledge,counter)
+			updateKripkeStrategy1(model, agent, commonKnowledge, counter)
 		counter +=1
+		# ask the user whether to print the graph or not
 		if agent.id!=1:
 			while True:
 				updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model (a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
@@ -104,12 +113,12 @@ def announcementLoop(agents,model,n,hats):
 				else:
 					break
 			if(updatedkripkeChoice=="yes"):
-				utility.printGraph(model,hats,counter,1)
+				utility.printGraph(model,hats,counter)
 	return commonKnowledge
 
 
-# update the model for each agent afer the announcements			
-def updateKripke(m,a,commonKnowledge, counter):
+# update the model for each agent after the announcements
+def updateKripkeStrategy1(m, a, commonKnowledge, counter):
 	for agent,worlds in m.items():
 		if agent<a.id: #only update the knowledge of the agents in front of the agent that just spoke
 			toRemove=[]
@@ -138,10 +147,9 @@ def updateKripke(m,a,commonKnowledge, counter):
 def deduceHatColour(a,m,counter):
 	worlds=m[a.id] # copy the worlds of a given agent
 	knowsHat=1
-	#print(dict(m))
 	for w in range(0,len(worlds)):
 		for nextWorld in range(1,len(worlds)):
-			if worlds[w][counter]!=worlds[nextWorld][counter] : # compare if the element in the position of the agent is the same for all worlds
+			if worlds[w][counter]!=worlds[nextWorld][counter] : # compare if the element at the position of the agent is the same for all worlds
 				knowsHat=0
 				break
 			else:
@@ -153,17 +161,17 @@ def deduceHatColour(a,m,counter):
 	else:
 		return 'pass'
 
-# check if at most one mistake has been commited
+# check if at most one mistake has been committed
 def checkRiddle(c,h,strategy):
 	h.reverse()
-	if strategy==1:
+	if strategy==1: # check riddle strategy1
 		numberOfMistakes=np.sum(c != h) # count number of dissimilar item
 		if numberOfMistakes == 0 :
 			print("Wow you are a highly intelligence specie, you will not be eaten!")
 		elif numberOfMistakes == 1 :
 			print("You are lucky, you made only one mistake so you will not be eaten!")
 		else:
-			print("Gnam gnam you all will be our dinner!!")
+			print("Yum yum you all will be our dinner!!")
 	else: # check riddle strategy 2
 		mistake=0
 		counter = 0
@@ -178,7 +186,7 @@ def checkRiddle(c,h,strategy):
 		if mistake == 0:
 			print("You are intelligent enough, you will be spared!")
 		else:
-			print("Gnam gnam you all will be our dinner!!")
+			print("yum yum you all will be our dinner!!")
 
 
 
@@ -186,7 +194,7 @@ def checkRiddle(c,h,strategy):
 def runRiddle1(a,number_prisoners,h,strategy):
 	m=utility.createAgentKnowledge(a,number_prisoners,h,['blue','red']) # creates the initial kripke model
 	if(strategy==1):
-		c=announcementLoop(a,m,number_prisoners,h) # go in the announcement loop
+		c=announcementLoopStrategy1(a, m, number_prisoners, h) # go in the announcement loop
 		checkRiddle(c,h,1)
 	else:
 		c=announcementLoopStrategy2(a,m,number_prisoners,h) # go in the announcement loop
