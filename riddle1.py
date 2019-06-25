@@ -1,10 +1,10 @@
-# this script implements riddle1 with either Strategy 1 or Strategy 2
+# This script implements Riddle 1 with either Strategy 1 or Strategy 2
 
 import numpy as np
 import utility
 
 
-# counts the number of red hats
+# Counts the number of red hats
 def countHats(agent,agents):
 	numberRedHats=0
 	for a in agents[:agent.id-1]:
@@ -17,7 +17,7 @@ def announcementLoopStrategy2(agents,model,n,hats):
 	counter=0
 	commonKnowledge=[]
 	for agent in reversed(agents):
-		# the tallest agent announces either blue or pass (see Strategy)
+		# The tallest agent announces either blue or pass (see Strategy)
 		if agent.id==n:
 			print("Agent", agent.id, "announces:")
 			number=countHats(agent,agents)
@@ -28,7 +28,7 @@ def announcementLoopStrategy2(agents,model,n,hats):
 				print('pass')
 				commonKnowledge.append('pass')
 			updateKripkeStrategy2(model,commonKnowledge,agent,counter,n)
-		# the other agents deduce their hat color based on the updated Kripke model
+		# The other agents deduce their hat colour based on the updated Kripke model
 		else:
 			color=deduceHatColour(agent,model,counter)
 			print("Agent", agent.id, "announces:")
@@ -38,7 +38,7 @@ def announcementLoopStrategy2(agents,model,n,hats):
 		counter += 1
 		if agent.id!=1:
 			while True:
-				updatedkripkeChoice = str(input("Would you like to inspect the updated Kripke model (a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
+				updatedkripkeChoice = str(input("Would you like to inspect the updated Kripke model (i.e. a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
 				if (updatedkripkeChoice != "yes" and updatedkripkeChoice != "no"):
 					print("Please enter either yes or no.")
 					continue
@@ -51,7 +51,7 @@ def announcementLoopStrategy2(agents,model,n,hats):
 # Updates the Kripke model
 def updateKripkeStrategy2(m,commonKnowledge,a,counter,n):
 	for agent,worlds in m.items():
-		# update the worlds of the agent(s) in front of the one that just spoke
+		# Update the worlds of the agent(s) in front of the one that just spoke
 		if agent<a.id:
 			toRemove=[]
 			for w in worlds:
@@ -60,7 +60,7 @@ def updateKripkeStrategy2(m,commonKnowledge,a,counter,n):
 					if commonKnowledge[counter] == 'blue':
 						if 'blue' in worldSubset == True: #Remove all worlds that contain a blue hat
 							toRemove.append(w)
-					else: # case in which agent 1 passed
+					else: # Case in which agent 1 passed
 						if worldSubset.count('red') == n - 1:  # Remove the worlds that contains all red hats
 							toRemove.append(w)
 				else: # From second agent onwards
@@ -95,7 +95,7 @@ def announcementLoopStrategy1(agents, model, n, hats):
 				print('blue')
 				commonKnowledge.append('blue')
 			updateKripkeStrategy1(model, agent, commonKnowledge, counter)
-		# The other agents deduce the hat colors based on the updated Kripke model
+		# The other agents deduce the hat colours based on the updated Kripke model
 		else:
 			color=deduceHatColour(agent,model,counter)
 			print("Agent",agent.id,"announces:")
@@ -106,7 +106,7 @@ def announcementLoopStrategy1(agents, model, n, hats):
 		# Ask the user whether to print the graph or not
 		if agent.id!=1:
 			while True:
-				updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model (a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
+				updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model (i.e a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
 				if (updatedkripkeChoice != "yes" and updatedkripkeChoice != "no"):
 					print("Please enter either yes or no.")
 					continue
@@ -134,8 +134,8 @@ def updateKripkeStrategy1(m, a, commonKnowledge, counter):
 				else:
 					if worldSubset[counter-1]!=commonKnowledge[counter]:
 						toRemove.append(w)
-					if commonKnowledge[0]=='red' and w not in toRemove: # even number
-						if worldSubset.count('red') %2 != 0: # remove subworlds with an odd number of red hats
+					if commonKnowledge[0]=='red' and w not in toRemove: # Even number
+						if worldSubset.count('red') %2 != 0: # Remove subworlds with an odd number of red hats
 							toRemove.append(w)
 					elif commonKnowledge[0]=='blue' and w not in toRemove: # odd number
 						if worldSubset.count('red') %2 == 0: # Remove subworlds with an even number of red hats
@@ -143,7 +143,7 @@ def updateKripkeStrategy1(m, a, commonKnowledge, counter):
 			for i in toRemove: # Remove the list of worlds from the dictionary
 				m[agent].remove(i)
 				
-# deduces the hat colour of an agent
+# Deduces the hat colour of an agent
 def deduceHatColour(a,m,counter):
 	worlds=m[a.id] # Copy the worlds of a given agent
 	knowsHat=1
@@ -161,17 +161,17 @@ def deduceHatColour(a,m,counter):
 	else:
 		return 'pass'
 
-# check if at most one mistake has been committed
+# Check if at most one mistake has been committed
 def checkRiddle(c,h,strategy):
 	h.reverse()
 	if strategy==1: # check riddle strategy1
 		numberOfMistakes=np.sum(c != h) # count number of dissimilar item
 		if numberOfMistakes == 0 :
-			print("Wow you are a highly intelligence specie, you will not be eaten!")
+			print("Wow! You are a highly intelligence species! You will not be eaten!")
 		elif numberOfMistakes == 1 :
 			print("You are lucky, you made only one mistake so you will not be eaten!")
 		else:
-			print("Yum yum you all will be our dinner!!")
+			print("Yum yum! You will all be our dinner!!")
 	else: # check riddle strategy 2
 		mistake=0
 		counter = 0
@@ -186,7 +186,7 @@ def checkRiddle(c,h,strategy):
 		if mistake == 0:
 			print("You are intelligent enough, you will be spared!")
 		else:
-			print("yum yum you all will be our dinner!!")
+			print("Yum yum! You will all be our dinner!!")
 
 
 

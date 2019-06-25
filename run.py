@@ -11,7 +11,7 @@ import riddle2
 	
 # contains the dialogue with the user	   
 if __name__ == '__main__':
-	print("Welcome, I am a highly intelligent riddle solver and today I am challenging you to solve one of these two riddles (or both). Do you dare? Read the two riddle belows:")
+	print("Welcome, I am a highly intelligent riddle solver and today I am challenging you to solve one of these two riddles (or both). Do you dare? Read the descriptions of the two riddles below:")
 	with open('description.txt', 'r') as d:
 			print(d.read())
 	while True:

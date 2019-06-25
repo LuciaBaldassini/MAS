@@ -21,7 +21,7 @@ def calculateCheckSum(id,h):
 			checkSum += hatsCode[hats] # Calculate the checkSum of the hats in the row in front of each agent
 	return checkSum
 
-# Returns the color and the associated modulo
+# Returns the colour and the associated modulo
 def calculateHatColor(checkSum):
 	modulo=checkSum%3
 	if modulo in hatsCode.values():
@@ -54,7 +54,7 @@ def announcementLoop(agents,model,n,hats):
 		# Ask to optionally draw the Kripke model
 		if agent.id!=1:
 			while True:
-				updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model (a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
+				updatedkripkeChoice= str(input("Would you like to inspect the updated Kripke model (i.e a nice fancy graph will be saved in the same folder as this programme)? [yes/no] \n"))
 				if (updatedkripkeChoice != "yes" and updatedkripkeChoice != "no"):
 					print("Please enter either yes or no.")
 					continue
@@ -69,7 +69,7 @@ def updateKripkeModel(m,a,hats, runningTally,previousAnnouncement,counter):
 	toRemove = []
 	# calculate checksum of the agent next in line
 	s = calculateCheckSum(a.id-1, hats)
-	# performs modulo division to find the hat color
+	# performs modulo division to find the hat colour
 	c, modulo = calculateHatColor(runningTally - s)
 	# the agent next in line has the following worlds removed:
 	for worlds in m[a.id-1]:
